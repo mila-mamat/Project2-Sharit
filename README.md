@@ -2,7 +2,8 @@
 
 
 ```
-Blog Website
+AS A USER 
+
 1-	I will go the website and enter username and password to login to the website
     a.	If I don’t have a username, I need to create one
 2-	After I log in, from the main page I will see everyone’s posts.
