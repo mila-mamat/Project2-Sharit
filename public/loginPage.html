@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shareit!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  </head>
+  <body>
+
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="https://bulma.io">
+            <img src="https://cdn0.iconfinder.com/data/icons/tuts/256/shareit.png" width="40" height="100">
+          </a>
+        </div>
+    </nav>
+
+  <div class="columns is-mobile is-centered" style="margin: 5em;">
+    <div class="column is-half has-background-success" style="margin: 2em; padding: 3em;">          
+        <label class="is-size-4" style="margin-bottom: 2em;">Sign Up Today!</label>
+        <div class="field">
+            <label class="label">Email(Username)</label>
+            <div class="control has-icons-left has-icons-right">
+              <input id="usernameSignup" class="input is-danger" type="email" placeholder="email">
+              <span class="icon is-small is-left"> 
+                <i class="fas fa-envelope"></i>
+              </span>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Password</label>
+            <div class="control has-icons-left has-icons-right">
+              <input id="passwordSignup" class="input is-danger" type="password" placeholder="password">
+              <span class="icon is-small is-left"> 
+                <i class="fas fa-lock"></i>
+              </span>
+            </div>
+        </div>
+        <div class="field is-grouped">
+            <div class="control">
+              <button id="signupBtn" class="button is-link">Sign up</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="column is-half has-background-warning" style="margin: 2em; padding: 3em;">
+        <label class="is-size-4" style="margin-bottom: 2em;">Start Shareit!</label>
+        <div class="field">
+            <label class="label">Email(Username)</label>
+            <div class="control has-icons-left has-icons-right">
+              <input id="usernameLogin" class="input is-danger" type="email" placeholder="email">
+              <span class="icon is-small is-left"> 
+                <i class="fas fa-envelope"></i>
+              </span>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Password</label>
+            <div class="control has-icons-left has-icons-right">
+              <input id="passwordLogin" class="input is-danger" type="password" placeholder="password">
+              <span class="icon is-small is-left"> 
+                <i class="fas fa-lock"></i>
+              </span>
+            </div>
+        </div>
+        <div class="field is-grouped">
+            <div class="control">
+              <button id="loginBtn" class="button is-link">Ok</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="js/loginHelper.js"></script>
+  </body>
+</html>
