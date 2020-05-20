@@ -1,4 +1,5 @@
-# not-decided-yet
+# Sharit
+Life is beautiful, share it!
 
 
 ```
