@@ -1,0 +1,41 @@
+Section 1 File Structure Break Down
+
+The code folder structure is shown as below: 
+
+|   Explain.txt
+|   output.doc
+|   package-lock.json
+|   package.json
+|   server.js
+|   
++---config
+|   |   config.json
+|   |   passport.js
+|   |   
+|   \---middleware
+|           isAuthenticated.js
+|           
++---models
+|       index.js
+|       user.js
+|       
++---node_modules
++---public
+|   |   login.html
+|   |   members.html
+|   |   signup.html
+|   |   
+|   +---js
+|   |       login.js
+|   |       members.js
+|   |       signup.js
+|   |       
+|   \---stylesheets
+|           style.css
+|           
+\---routes
+        api-routes.js
+        html-routes.js
+        
+
+
