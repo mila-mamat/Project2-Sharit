@@ -8,7 +8,7 @@ module.exports = function(app) {
   // Otherwise the user will be sent an error
   // Uses passport npm module
   app.post("/api/login", passport.authenticate("local"), function(req, res) {
-    console.log(req.user)
+    // console.log(req.user)
     res.json(req.user);
   });
 

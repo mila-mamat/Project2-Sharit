@@ -39,7 +39,7 @@ document.getElementById('signupBtn').onclick = () =>{
 function loginUser(userDataObj) {
 $.post("/api/login", userDataObj)
     .then(function() {
-    window.location.replace("/members");
+    window.location.replace("/home");
     // If there's an error, log the error
     })
     .catch(function(err) {
@@ -60,7 +60,7 @@ $.post("/api/login", userDataObj)
 function signUpUser(userDataObj) {
     $.post("/api/signup", userDataObj)
       .then(function(data) {
-        window.location.replace("/members");
+        window.location.replace("/home");
         // If there's an error, handle it by throwing up a bootstrap alert
       })
       .catch(handleLoginErr);
