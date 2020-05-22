@@ -6,6 +6,7 @@ module.exports = function(app) {
   // Using the passport.authenticate middleware with our local strategy.
   // If the user has valid login credentials, send them to the home page.
   // Otherwise the user will be sent an error
+  // Uses passport npm module
   app.post("/api/login", passport.authenticate("local"), function(req, res) {
     console.log(req.user)
     res.json(req.user);
@@ -14,7 +15,7 @@ module.exports = function(app) {
   // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
   // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
   // otherwise send back an error
-  app.post("/api/signup", function(req, res) {
+  app.post("/api/users", function(req, res) {
     console.log(req.body)
     db.User.create({
       email: req.body.email,
@@ -29,13 +30,14 @@ module.exports = function(app) {
   });
 
   // Route for logging user out
+  // Uses passport npm module
   app.get("/logout", function(req, res) {
     req.logout();
     res.redirect("/");
   });
 
   // Route for getting some data about our user to be used client side
-  app.get("/api/user_data", function(req, res) {
+  app.get("/api/users/:user-id", function(req, res) {
     if (!req.user) {
       // The user is not logged in, send back an empty object
       res.json({});
@@ -47,5 +49,50 @@ module.exports = function(app) {
         id: req.user.id
       });
     }
+  });
+
+  // TODO: edit user profile
+  app.patch("/api/users/:user-id", function(req, res) {
+
+  });
+
+  // TODO: create posts
+  app.post("/api/posts", function(req, res) {
+
+  });
+
+  // TODO: display all posts on main page
+  app.get("/api/posts", function(req, res) {
+
+  });
+
+  // TODO: display single post with comments 
+  app.get("/api/posts/:post-id", function(req, res) {
+
+  });
+
+  // TODO: delete posts
+  app.delete("/api/posts/:post-id", function(req, res) {
+
+  });
+
+  // TODO: edit posts
+  app.patch("/api/posts/:post-id", function(req, res) {
+
+  });
+
+  // TODO: create comments
+  app.post("/api/comments", function(req, res) {
+
+  });
+    
+  // TODO: create likes
+  app.post("/api/likes", function(req, res) {
+
+  });
+
+  // TODO: delete likes
+  app.delete("/api/likes/:like-id", function(req, res) {
+
   });
 };
