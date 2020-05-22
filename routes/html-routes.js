@@ -41,9 +41,9 @@ module.exports = function(app) {
   // TODO: display profile page
   // Must use handlebars
   app.get("/profile/:username", function(req, res) {
-    let profileID = req.params.username
-    console.log(profileID)
-    res.render('index', {  })
+    let profileName = req.params.username
+    console.log(profileName)
+    res.render('index', {profileName})
 
   });
 };
