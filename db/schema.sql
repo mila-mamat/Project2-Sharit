@@ -19,8 +19,6 @@ CREATE TABLE `users`
   `city` VARCHAR (60),
   `province` VARCHAR (60),
   `country` VARCHAR (60),
-  `datetime_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `datetime_modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
 
@@ -30,8 +28,6 @@ CREATE TABLE `posts`
 	`id` INTEGER NOT NULL AUTO_INCREMENT,
   `post_photo` BLOB,
   `text` VARCHAR (255) NOT NULL,
-  `datetime_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `datetime_modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` INTEGER NOT NULL,
   PRIMARY KEY (`id`)
 );
@@ -41,8 +37,6 @@ CREATE TABLE `comments`
 (
 	`id` INTEGER NOT NULL AUTO_INCREMENT,
 	`text` VARCHAR (255) NOT NULL,
-  `datetime_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `datetime_modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`user_id` INTEGER NOT NULL,
   `post_id` INTEGER NOT NULL,
   PRIMARY KEY (`id`)
@@ -52,7 +46,6 @@ CREATE TABLE `comments`
 CREATE TABLE `likes`
 (
 	`id` INTEGER NOT NULL AUTO_INCREMENT,
-  `datetime_created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`user_id` INTEGER NOT NULL,
   `post_id` INTEGER,
   `comment_id` INTEGER,
