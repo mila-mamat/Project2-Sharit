@@ -31,10 +31,10 @@ border:red 1px solid
 
 
 /* navbar  */
-.navbar-brand  {
+.navbar-brand, .slogan  {
   font-family:'Pattaya', sans-serif;
-  /* color:#89afed */
 }
+
 
 .navbar-brand a span {
   color:#fa7000
@@ -51,6 +51,24 @@ border:red 1px solid
 #main-content {
   width:80%;
   margin:10px auto;
+}
+
+
+
+#main-content .notification{
+  margin:10px;
+  padding:20px;
+  background-color: white;
+  font-size: 16px;
+}
+
+#main-content form .buttons {
+display:flex;
+justify-content: flex-end;
+}
+#main-content form .buttons > *{
+margin:5px 10px;
+
 }
 
 /* clear fix */
@@ -132,3 +150,6 @@ border:red 1px solid
 
 
 /* end of posts masonry  */
+
+
+
