@@ -115,7 +115,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   
   // Create hook to automatically hash password provided by user prior to storing in database
-  User.addHook("beforeCreate", user => {
+  User.addHook("beforeCreate", function (user) {
     user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
   });
 
