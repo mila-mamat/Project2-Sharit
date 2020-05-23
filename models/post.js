@@ -1,11 +1,9 @@
-// Import dependencies
-
 // Create Post model
 module.exports = function(sequelize, DataTypes) {
-  const Post = sequelize.define("post", {
+  const Post = sequelize.define("Post", {
     // Define Post attributes
     post_photo: {
-      type: DataTypes.BLOB
+      type: DataTypes.STRING
     },
     text: {
       type: DataTypes.STRING,
@@ -13,15 +11,17 @@ module.exports = function(sequelize, DataTypes) {
       validate: {
         max: 255
       }
-    },
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        isNumeric: true
-      }
     }
   });
+
+  // Add associations
+  Post.associate = models => {
+    Post.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+  };
 
   return Post;
 };

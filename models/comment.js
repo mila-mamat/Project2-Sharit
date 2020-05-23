@@ -1,8 +1,6 @@
-// Import dependencies
-
 // Create Comment model
-module.exports = function(sequelize, DataTypes) {
-  const Comment = sequelize.define("comment", {
+module.exports = (sequelize, DataTypes) => {
+  const Comment = sequelize.define("Comment", {
     // Define Post attributes
     text: {
       type: DataTypes.STRING,
@@ -10,22 +8,22 @@ module.exports = function(sequelize, DataTypes) {
       validate: {
         max: 255
       }
-    },
-    user_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        isNumeric: true
-      }
-    },
-    post_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        isNumeric: true
-      }
     }
   });
+
+  // Add associations
+  Comment.associate = models => {
+    Comment.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+    Comment.belongsTo(models.Post, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+  };
 
   return Comment;
 };
