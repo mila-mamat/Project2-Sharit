@@ -147,6 +147,14 @@ module.exports = app => {
             model: db.PostLike,
             group: ['post_id'],
             attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
+          },
+          {
+            model: db.User,
+            attributes: [
+              'first_name',
+              'last_name',
+              'profile_photo'
+            ]
           }
         ]
       });
@@ -204,7 +212,8 @@ module.exports = app => {
             model: db.User,
             attributes: [
               'first_name',
-              'last_name'
+              'last_name',
+              'profile_photo'
             ]
           }
         ]
