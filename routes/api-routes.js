@@ -37,7 +37,6 @@ module.exports = app => {
   app.get("/api/users/:user-id", async (req, res) => {
     try {
      
-      }
     } catch (err) {
 
     }   
