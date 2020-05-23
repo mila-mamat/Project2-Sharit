@@ -1,9 +1,10 @@
 // Import dependencies
 const bcrypt = require("bcryptjs");
+const to = require('to-case');
 
 // Create User model
-module.exports = function(sequelize, DataTypes) {
-  const User = sequelize.define("user", {
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define("User", {
     // Define User attributes
     username: {
       type: DataTypes.STRING,
@@ -17,7 +18,6 @@ module.exports = function(sequelize, DataTypes) {
     password: {
       type: DataTypes.STRING,
       allowNull: false
-      // TODO: Add len validation; check length of hash
     },
     first_name: {
       type: DataTypes.STRING,
@@ -25,6 +25,9 @@ module.exports = function(sequelize, DataTypes) {
       validate: {
         len: [2, 60],
         isAlpha: true
+      },
+      set (val) {
+        this.setDataValue('first_name', to.title(val));
       }
     },
     last_name: {
@@ -33,10 +36,13 @@ module.exports = function(sequelize, DataTypes) {
       validate: {
         len: [2, 60],
         isAlpha: true
+      },
+      set (val) {
+        this.setDataValue('last_name', to.title(val));
       }
     },
     profile_photo: {
-      type: DataTypes.BLOB
+      type: DataTypes.STRING
     },
     birthdate: {
       type: DataTypes.DATE(6),
@@ -45,24 +51,26 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     sex: {
-      type: DataTypes.STRING,
-      validate: {
-        len: [4, 6],
-        isAlpha: true
-      }
+      type: DataTypes.ENUM('Male', 'Female')
     },
     city: {
       type: DataTypes.STRING,
       validate: {
         len: [2, 60],
         isAlpha: true
+      },
+      set (val) {
+        this.setDataValue('city', to.title(val));
       }
     },
-    province: {
+    province_state: {
       type: DataTypes.STRING,
       validate: {
         len: [2, 60],
         isAlpha: true
+      },
+      set (val) {
+        this.setDataValue('province_state', to.title(val));
       }
     },
     country: {
@@ -70,9 +78,36 @@ module.exports = function(sequelize, DataTypes) {
       validate: {
         len: [2, 60],
         isAlpha: true
+      },
+      set (val) {
+        this.setDataValue('country', to.title(val));
       }
     }
   });
+
+  // Add associations
+  User.associate = models => {
+    User.hasMany(models.Post, {
+      foreignKey: {
+        onDelete: 'cascade'
+      }
+    });
+    User.hasMany(models.Comment, {
+      foreignKey: {
+        onDelete: 'cascade'
+      }
+    });
+    User.hasMany(models.CommentLike, {
+      foreignKey: {
+        onDelete: 'cascade'
+      }
+    });
+    User.hasMany(models.PostLike, {
+      foreignKey: {
+        onDelete: 'cascade'
+      }
+    });
+  };
 
   // Create method to check if unhashed password provided by user can be compared with hashed password in database
   User.prototype.validPassword = password => {
