@@ -2,7 +2,7 @@
 
 // Create Comment model
 module.exports = function(sequelize, DataTypes) {
-  const Comment = sequelize.define("Comment", {
+  const Comment = sequelize.define("comment", {
     // Define Post attributes
     text: {
       type: DataTypes.STRING,

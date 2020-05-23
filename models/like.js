@@ -2,7 +2,7 @@
 
 // Create Like model
 module.exports = function(sequelize, DataTypes) {
-  const Like = sequelize.define("Like", {
+  const Like = sequelize.define("like", {
     // Define Post attributes
     user_id: {
       type: DataTypes.INTEGER,

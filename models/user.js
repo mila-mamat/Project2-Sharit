@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 
 // Create User model
 module.exports = function(sequelize, DataTypes) {
-  const User = sequelize.define("User", {
+  const User = sequelize.define("user", {
     // Define User attributes
     username: {
       type: DataTypes.STRING,
@@ -16,7 +16,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
+      // TODO: Add len validation; check length of hash
     },
     first_name: {
       type: DataTypes.STRING,
@@ -74,12 +75,12 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   // Create method to check if unhashed password provided by user can be compared with hashed password in database
-  User.prototype.validPassword = function(password) {
+  User.prototype.validPassword = password => {
     return bcrypt.compareSync(password, this.password);
   };
   
   // Create hook to automatically hash password provided by user prior to storing in database
-  User.addHook("beforeCreate", function(user) {
+  User.addHook("beforeCreate", user => {
     user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
   });
 

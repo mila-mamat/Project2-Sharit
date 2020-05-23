@@ -25,7 +25,9 @@ module.exports = app => {
     try {
       await db.User.create({
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name
       })
       res.redirect(307, "/api/login");
     } catch (err) {
