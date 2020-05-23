@@ -111,14 +111,8 @@ module.exports = (sequelize, DataTypes) => {
 
   // Create method to check if unhashed password provided by user can be compared with hashed password in database
   User.prototype.validPassword = function (password) {
-    console.log(password)
-    console.log(this.password)
-    console.log(this)
     return bcrypt.compareSync(password, this.password);
   };
-
-
-
   
   // Create hook to automatically hash password provided by user prior to storing in database
   User.addHook("beforeCreate", user => {
