@@ -2,7 +2,7 @@
 
 // Create Post model
 module.exports = function(sequelize, DataTypes) {
-  const Post = sequelize.define("Post", {
+  const Post = sequelize.define("post", {
     // Define Post attributes
     post_photo: {
       type: DataTypes.BLOB

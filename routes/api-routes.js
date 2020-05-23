@@ -1,98 +1,127 @@
-// Requiring our models and passport as we've configured it
-var db = require("../models");
-var passport = require("../config/passport");
+// Import dependencies
+const db = require("../models");
+const passport = require("../config/passport");
 
-module.exports = function(app) {
-  // Using the passport.authenticate middleware with our local strategy.
-  // If the user has valid login credentials, send them to the home page.
-  // Otherwise the user will be sent an error
-  // Uses passport npm module
-  app.post("/api/login", passport.authenticate("local"), function(req, res) {
-    // console.log(req.user)
+module.exports = app => {
+  // Route to authenticate passport and send user to home page
+  app.post("/api/login", passport.authenticate("local"), async (req, res) => {
+    /* Test */
+    console.log(req.user);
+    
     res.json(req.user);
   });
 
-  // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
-  // how we configured our Sequelize User Model. If the user is created successfully, proceed to log the user in,
-  // otherwise send back an error
-  app.post("/api/users", function(req, res) {
-    console.log(req.body)
-    db.User.create({
-      email: req.body.email,
-      password: req.body.password
-    })
-      .then(function() {
-        res.redirect(307, "/api/login");
-      })
-      .catch(function(err) {
-        res.status(401).json(err);
-      });
-  });
-
-  // Route for logging user out
-  // Uses passport npm module
-  app.get("/logout", function(req, res) {
+  // Route to log user out
+  app.get("/logout", async (req, res) => {
     req.logout();
     res.redirect("/");
   });
 
-  // Route for getting some data about our user to be used client side
-  app.get("/api/users/:user-id", function(req, res) {
-    if (!req.user) {
-      // The user is not logged in, send back an empty object
-      res.json({});
-    } else {
-      // Otherwise send back the user's email and id
-      // Sending back a password, even a hashed password, isn't a good idea
-      res.json({
-        email: req.user.email,
-        id: req.user.id
-      });
+  // Route to create user on signup/login page
+  app.post("/api/users", async (req, res) => {
+    /* Test */
+    console.log(req.body);
+
+    try {
+      await db.User.create({
+        username: req.body.username,
+        password: req.body.password,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name
+      })
+      res.redirect(307, "/api/login");
+    } catch (err) {
+      res.status(401).json(err);
     }
   });
 
-  // TODO: edit user profile
-  app.patch("/api/users/:user-id", function(req, res) {
+  // TODO: Route to display user info on profile page
+  app.get("/api/users/:user-id", async (req, res) => {
+    try {
+     
+    } catch (err) {
 
+    }   
   });
 
-  // TODO: create posts
-  app.post("/api/posts", function(req, res) {
+  // TODO: Route to edit user info on profile page
+  app.patch("/api/users/:user-id", async (req, res) => {
+    try {
 
+    } catch (err) {
+
+    }
   });
 
-  // TODO: display all posts on main page
-  app.get("/api/posts", function(req, res) {
+  // TODO: Route to create post on main page
+  app.post("/api/posts", async (req, res) => {
+    try {
+      
+    } catch (err) {
 
+    }
   });
 
-  // TODO: display single post with comments 
-  app.get("/api/posts/:post-id", function(req, res) {
+  // TODO: Route to display posts on main page
+  app.get("/api/posts", async (req, res) => {
+    try {
+      
+    } catch (err) {
 
+    }
   });
 
-  // TODO: delete posts
-  app.delete("/api/posts/:post-id", function(req, res) {
+  // TODO: Route to display single post on post page
+  app.get("/api/posts/:post-id", async (req, res) => {
+    try {
+      
+    } catch (err) {
 
+    }
   });
 
-  // TODO: edit posts
-  app.patch("/api/posts/:post-id", function(req, res) {
+  // TODO: Route to delete post
+  app.delete("/api/posts/:post-id", async (req, res) => {
+    try {
+      
+    } catch (err) {
 
+    }
   });
 
-  // TODO: create comments
-  app.post("/api/comments", function(req, res) {
+  // TODO: Route to edit post
+  app.patch("/api/posts/:post-id", async (req, res) => {
+    try {
+      
+    } catch (err) {
 
+    }
+  });
+
+  // TODO: Route to create comment
+  app.post("/api/comments", async (req, res) => {
+    try {
+      
+    } catch (err) {
+
+    }
   });
     
-  // TODO: create likes
-  app.post("/api/likes", function(req, res) {
+  // TODO: Route to create like
+  app.post("/api/likes", async (req, res) => {
+    try {
+      
+    } catch (err) {
 
+    }
   });
 
-  // TODO: delete likes
-  app.delete("/api/likes/:like-id", function(req, res) {
+  // TODO: Route to delete like
+  app.delete("/api/likes/:like-id", async (req, res) => {
+    try {
+      
+    } catch (err) {
 
+    }
   });
 };

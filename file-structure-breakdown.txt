@@ -1,9 +1,8 @@
-Section 1 File Structure Break Down
+File Structure Breakdown
 
 The code folder structure is shown as below: 
 
-|   Explain.txt
-|   output.doc
+|   file-structure-breakdown.txt
 |   package-lock.json
 |   package.json
 |   server.js
@@ -16,7 +15,10 @@ The code folder structure is shown as below:
 |           isAuthenticated.js
 |           
 +---models
+|       comment.js
 |       index.js
+|       like.js
+|       post.js
 |       user.js
 |       
 +---node_modules
