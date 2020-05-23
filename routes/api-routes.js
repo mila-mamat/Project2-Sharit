@@ -23,34 +23,39 @@ module.exports = app => {
     console.log(req.body);
 
     try {
-      let newUserInstance = await db.User.create({
+      const newUser = await db.User.create({
         username: req.body.username,
         password: req.body.password,
         first_name: req.body.first_name,
         last_name: req.body.last_name
-      })
-      res.status(201).json(newUserInstance)
+      });
+      res.status(201).json(newUser);
     } catch (err) {
-      console.log(err)
-      res.status(400).json(err.message);
+      console.log(`POST /api/users failed \n`, err)
+      res.status(500).json({ errors: [err] })  
     }
   });
 
   // TODO: Route to display user info on profile page
-  app.get("/api/users/:user-id", async (req, res) => {
+  app.get("/api/users/:userId", async (req, res) => {
     try {
-     
+     const user = await db.User.findByPk(req.params.userId);
+     res.status(200).json({ data: user });
     } catch (err) {
-
+      // TODO: Add statuses based on error type
+      console.log(`GET /api/users/${req.params.userId} failed \n`, err)
+      res.status(500).json({ errors: [err] }) 
     }   
   });
 
   // TODO: Route to edit user info on profile page
-  app.patch("/api/users/:user-id", async (req, res) => {
+  app.patch("/api/users/:userId", async (req, res) => {
     try {
 
     } catch (err) {
-
+      // TODO: Add statuses based on error type
+      console.log(`PATCH /api/users/${req.params.userId} failed \n`, err)
+      res.status(500).json({ errors: [err] }) 
     }
   });
 
@@ -59,7 +64,9 @@ module.exports = app => {
     try {
       
     } catch (err) {
-
+      // TODO: Add statuses based on error type
+      console.log(`POST /api/posts failed \n`, err)
+      res.status(500).json({ errors: [err] }) 
     }
   });
 
@@ -68,16 +75,20 @@ module.exports = app => {
     try {
       
     } catch (err) {
-
+      // TODO: Add statuses based on error type
+      console.log(`GET /api/posts failed \n`, err)
+      res.status(500).json({ errors: [err] }) 
     }
   });
 
   // TODO: Route to display single post on post page
-  app.get("/api/posts/:post-id", async (req, res) => {
+  app.get("/api/posts/:postId", async (req, res) => {
     try {
       
     } catch (err) {
-
+      // TODO: Add statuses based on error type
+      console.log(`GET /api/posts/postId failed \n`, err)
+      res.status(500).json({ errors: [err] }) 
     }
   });
 
@@ -86,7 +97,9 @@ module.exports = app => {
     try {
       
     } catch (err) {
-
+      // TODO: Add statuses based on error type
+      console.log(`DELETE /api/posts/postId failed \n`, err)
+      res.status(500).json({ errors: [err] }) 
     }
   });
 
@@ -95,7 +108,9 @@ module.exports = app => {
     try {
       
     } catch (err) {
-
+      // TODO: Add statuses based on error type
+      console.log(`PATCH /api/posts/postId failed \n`, err)
+      res.status(500).json({ errors: [err] }) 
     }
   });
 
@@ -104,7 +119,9 @@ module.exports = app => {
     try {
       
     } catch (err) {
-
+      // TODO: Add statuses based on error type
+      console.log(`POST /api/comments failed \n`, err)
+      res.status(500).json({ errors: [err] }) 
     }
   });
     
@@ -113,7 +130,9 @@ module.exports = app => {
     try {
       
     } catch (err) {
-
+      // TODO: Add statuses based on error type
+      console.log(`POST /api/likes failed \n`, err)
+      res.status(500).json({ errors: [err] }) 
     }
   });
 
@@ -122,7 +141,9 @@ module.exports = app => {
     try {
       
     } catch (err) {
-
+      // TODO: Add statuses based on error type
+      console.log(`DELETE /api/likes failed \n`, err)
+      res.status(500).json({ errors: [err] }) 
     }
   });
 };
