@@ -17,22 +17,14 @@ module.exports = function (app) {
   // Here we've add our isAuthenticated middleware to this route.
   // If a user who is not logged in tries to access this route they will be redirected to the signup page
 
-  app.get("/|/home", isAuthenticated, function (req, res) {                      // if it is "/" or "/home"
+
+  app.get("/|/home", isAuthenticated, async function (req, res) {                      // if it is "/" or "/home"
     if (req.user) {
-      // res.sendFile(path.join(__dirname, "../public/home.html"));              // delete later
-      res.render('home.handlebars')
+      let posts = await db.Post.findAll()
+      console.log("posts:",posts)
+      res.render('home.handlebars',{posts:posts})
     } else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
   });
-
-
-  // app.get("/home", isAuthenticated, function (req, res) {
-  //   if (req.user) {
-  //     // res.sendFile(path.join(__dirname, "../public/home.html"));
-  //     res.render('home.handlebars')
-  //   } else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
-  // });
-
-
 
 
   // TODO: display single post and comments
