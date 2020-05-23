@@ -1,12 +1,12 @@
 // Import dependencies
-var db = require("../models");
-var passport = require("../config/passport");
+const db = require("../models");
+const passport = require("../config/passport");
 
 module.exports = app => {
-  // Route to check if user has valid credentials and if so send to home page
+  // Route to authenticate passport and send user to home page
   app.post("/api/login", passport.authenticate("local"), async (req, res) => {
     /* Test */
-    console.log(req.user)
+    console.log(req.user);
     
     res.json(req.user);
   });
@@ -17,14 +17,14 @@ module.exports = app => {
     res.redirect("/");
   });
 
-  // Route to create user
+  // Route to create user on signup/login page
   app.post("/api/users", async (req, res) => {
     /* Test */
-    console.log(req.body)
+    console.log(req.body);
 
     try {
       await db.User.create({
-        email: req.body.email,
+        username: req.body.username,
         password: req.body.password
       })
       res.redirect(307, "/api/login");
@@ -33,22 +33,13 @@ module.exports = app => {
     }
   });
 
-  // Route to display user info on profile page
+  // TODO: Route to display user info on profile page
   app.get("/api/users/:user-id", async (req, res) => {
     try {
-      if (!req.user) {
-        // If user is not logged in, return empty object
-        res.json({});
-      } else {
-        // Else return user info
-        res.json({
-          // TODO: add additional info
-          email: req.user.email,
-          id: req.user.id
-        });
+     
       }
     } catch (err) {
-      // TODO: Add error handling
+
     }   
   });
 
