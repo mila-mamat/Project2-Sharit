@@ -63,23 +63,12 @@ module.exports = app => {
             include: [
               {
                 model: db.Comment,
-                attributes: [
-                  'id',
-                  'text',
-                  'datetime_modified'
-                ],
+                attributes: [],
                 include: [
                   {
                     model: db.CommentLike,
                     group: ['comment_id'],
                     attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comment_likes']]
-                  },
-                  {
-                    model: db.User,
-                    attributes: [
-                      'first_name',
-                      'last_name'
-                    ]
                   }
                 ]
               },
@@ -136,7 +125,9 @@ module.exports = app => {
     
     try {
       // TODO: Get post author and number of likes
-      const posts = await db.Post.findAll();
+      const posts = await db.Post.findAll({
+        
+      });
       res.status(200).json({ data: posts });
     } catch (err) {
       console.log(`GET /api/posts failed \n`, err)
@@ -150,8 +141,52 @@ module.exports = app => {
     console.log(req.body);
     
     try {
-      // TODO: get post author and number of likes, and comments, comment authors and number of likes
-      let post = await db.Post.findByPk(req.params.postId);
+      let post = await db.Post.findAll({
+        where: {
+          id: req.params.postId
+        },
+        attributes: [
+          'post_photo',
+          'text',
+          'datetime_modified'
+        ],
+        include: [
+          {
+            model: db.Comment,
+            attributes: [
+              'id',
+              'text',
+              'datetime_modified'
+            ],
+            include: [
+              {
+                model: db.CommentLike,
+                group: ['comment_id'],
+                attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comment_likes']]
+              },
+              {
+                model: db.User,
+                attributes: [
+                  'first_name',
+                  'last_name'
+                ]
+              }
+            ]
+          },
+          {
+            model: db.PostLike,
+            group: ['post_id'],
+            attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
+          },
+          {
+            model: db.User,
+            attributes: [
+              'first_name',
+              'last_name'
+            ]
+          }
+        ]
+      });
       res.status(200).json({ data: post });
     } catch (err) {
       console.log(`GET /api/posts/postId failed \n`, err)
