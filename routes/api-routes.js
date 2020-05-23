@@ -23,126 +23,185 @@ module.exports = app => {
     console.log(req.body);
 
     try {
-      const newUser = await db.User.create({
-        username: req.body.username,
-        password: req.body.password,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name
-      });
-      res.status(201).json(newUser);
+      const user = await db.User.create(req.body);
+      res.status(200).json({ data: user });
     } catch (err) {
       console.log(`POST /api/users failed \n`, err)
       res.status(500).json({ errors: [err] })  
     }
   });
 
-  // TODO: Route to display user info on profile page
+  // Route to display user info on profile page
   app.get("/api/users/:userId", async (req, res) => {
+    /* Test */
+    console.log(req.body);
+
     try {
      const user = await db.User.findByPk(req.params.userId);
      res.status(200).json({ data: user });
     } catch (err) {
-      // TODO: Add statuses based on error type
       console.log(`GET /api/users/${req.params.userId} failed \n`, err)
       res.status(500).json({ errors: [err] }) 
     }   
   });
 
-  // TODO: Route to edit user info on profile page
+  // Route to edit user info on profile page
   app.patch("/api/users/:userId", async (req, res) => {
+    /* Test */
+    console.log(req.body);
+    
     try {
-
+      let user = await db.User.findByPk(req.params.userId);
+      if (!user) return res.status(404).json({ errors: [{ title: 'Not found' }] });
+      user = await db.User.update(req.body);
+      res.status(200).json({ data: user });
     } catch (err) {
-      // TODO: Add statuses based on error type
       console.log(`PATCH /api/users/${req.params.userId} failed \n`, err)
       res.status(500).json({ errors: [err] }) 
     }
   });
 
-  // TODO: Route to create post on main page
+  // Route to create post on main page
   app.post("/api/posts", async (req, res) => {
+    /* Test */
+    console.log(req.body);
+    
     try {
-      
+      const post = await db.Post.create(req.body);
+      res.status(200).json({ data: post });
     } catch (err) {
-      // TODO: Add statuses based on error type
       console.log(`POST /api/posts failed \n`, err)
       res.status(500).json({ errors: [err] }) 
     }
   });
 
-  // TODO: Route to display posts on main page
+  // Route to display posts on main page
   app.get("/api/posts", async (req, res) => {
+    /* Test */
+    console.log(req.body);
+    
     try {
-      
+      const posts = await db.Post.findAll();
+      res.status(200).json({ data: posts });
     } catch (err) {
-      // TODO: Add statuses based on error type
       console.log(`GET /api/posts failed \n`, err)
       res.status(500).json({ errors: [err] }) 
     }
   });
 
-  // TODO: Route to display single post on post page
+  // Route to display single post on post page
   app.get("/api/posts/:postId", async (req, res) => {
+    /* Test */
+    console.log(req.body);
+    
     try {
-      
+      let post = await db.Post.findByPk(req.params.postId);
+      res.status(200).json({ data: post });
     } catch (err) {
-      // TODO: Add statuses based on error type
       console.log(`GET /api/posts/postId failed \n`, err)
       res.status(500).json({ errors: [err] }) 
     }
   });
 
-  // TODO: Route to delete post
-  app.delete("/api/posts/:post-id", async (req, res) => {
+  // Route to delete post
+  app.delete("/api/posts/:postId", async (req, res) => {
+    /* Test */
+    console.log(req.body);
+    
     try {
-      
+      let post = await db.Post.findByPk(req.params.postId);
+      post = await post.destroy();
+      res.status(200).json({ data: post });
     } catch (err) {
-      // TODO: Add statuses based on error type
-      console.log(`DELETE /api/posts/postId failed \n`, err)
+      console.log(`DELETE /api/posts/${req.params.postId} failed \n`, err)
       res.status(500).json({ errors: [err] }) 
     }
   });
 
-  // TODO: Route to edit post
-  app.patch("/api/posts/:post-id", async (req, res) => {
+  // Route to edit post
+  app.patch("/api/posts/:postId", async (req, res) => {
+    /* Test */
+    console.log(req.body);
+    
     try {
-      
+      let post = await db.Post.findByPk(req.params.postId);
+      if (!post) return res.status(404).json({ errors: [{ title: 'Not found' }] });
+      post = await db.Post.update(req.body);
+      res.status(200).json({ data: post });
     } catch (err) {
-      // TODO: Add statuses based on error type
-      console.log(`PATCH /api/posts/postId failed \n`, err)
+      console.log(`PATCH /api/posts/${req.params.postId} failed \n`, err)
       res.status(500).json({ errors: [err] }) 
     }
   });
 
-  // TODO: Route to create comment
+  // Route to create comment
   app.post("/api/comments", async (req, res) => {
+    /* Test */
+    console.log(req.body);
+    
     try {
-      
+      const comment = await db.Comment.create(req.body);
+      res.status(200).json({ data: comment });
     } catch (err) {
-      // TODO: Add statuses based on error type
       console.log(`POST /api/comments failed \n`, err)
       res.status(500).json({ errors: [err] }) 
     }
   });
     
-  // TODO: Route to create like
-  app.post("/api/likes", async (req, res) => {
+  // Route to create post like
+  app.post("/api/post-likes", async (req, res) => {
+    /* Test */
+    console.log(req.body);
+    
     try {
-      
+      const postLike = await db.PostLike.create(req.body);
+      res.status(200).json({ data: postLike });
     } catch (err) {
-      // TODO: Add statuses based on error type
-      console.log(`POST /api/likes failed \n`, err)
+      console.log(`POST /api/post-likes failed \n`, err)
       res.status(500).json({ errors: [err] }) 
     }
   });
 
-  // TODO: Route to delete like
-  app.delete("/api/likes/:like-id", async (req, res) => {
+  // Route to delete post like
+  app.delete("/api/post-likes/:postLikeId", async (req, res) => {
+    /* Test */
+    console.log(req.body);
+    
     try {
-      
+      let postLike = await db.PostLike.findByPk(req.params.postLikeId);
+      postLike = await postLike.destroy();
+      res.status(200).json({ data: postLike });
     } catch (err) {
-      // TODO: Add statuses based on error type
-      console.log(`DELETE /api/likes failed \n`, err)
+      console.log(`DELETE /api/post-likes/${req.params.postLikeId} failed \n`, err)
+      res.status(500).json({ errors: [err] }) 
+    }
+  });
+
+   // Route to create comment like
+   app.post("/api/comment-likes", async (req, res) => {
+    /* Test */
+    console.log(req.body);
+    
+    try {
+      const commentLike = await db.CommentLike.create(req.body);
+      res.status(200).json({ data: commentLike });
+    } catch (err) {
+      console.log(`POST /api/comment-likes failed \n`, err)
+      res.status(500).json({ errors: [err] }) 
+    }
+  });
+
+  // Route to delete comment like
+  app.delete("/api/comment-likes/:commentLikeId", async (req, res) => {
+    /* Test */
+    console.log(req.body);
+    
+    try {
+      let commentLike = await db.CommentLike.findByPk(req.params.commentLikeId);
+      commentLike = await commentLike.destroy();
+      res.status(200).json({ data: commentLike });
+    } catch (err) {
+      console.log(`DELETE /api/post-likes/${req.params.commentLikeId} failed \n`, err)
       res.status(500).json({ errors: [err] }) 
     }
   });
