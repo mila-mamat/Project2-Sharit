@@ -23,15 +23,16 @@ module.exports = app => {
     console.log(req.body);
 
     try {
-      await db.User.create({
+      let newUserInstance = await db.User.create({
         username: req.body.username,
         password: req.body.password,
         first_name: req.body.first_name,
         last_name: req.body.last_name
       })
-      res.redirect(307, "/api/login");
+      res.status(201).json(newUserInstance)
     } catch (err) {
-      res.status(401).json(err);
+      console.log(err)
+      res.status(400).json(err.message);
     }
   });
 

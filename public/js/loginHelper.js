@@ -12,7 +12,7 @@ document.getElementById('loginBtn').onclick = () =>{
         password: passwordLogin.value.trim()
     };
 
-    if (!userData.email || !userData.password) {
+    if (!userData.username || !userData.password) {
       return;
     }
 
@@ -30,7 +30,7 @@ document.getElementById('signupBtn').onclick = () =>{
         last_name: lastNameSignup.value.trim()
     };
 
-    if (!userData.email || !userData.password) {
+    if (!userData.username || !userData.password || !userData.first_name || !userData.last_name) {
       return;
     }
 
@@ -39,7 +39,7 @@ document.getElementById('signupBtn').onclick = () =>{
     usernameSignup.value = ''
     passwordSignup.value = ''
     firstNameSignup.value = ''
-    lastnameSignup.value = ''
+    lastNameSignup.value = ''
 
 }
 
@@ -65,10 +65,12 @@ $.post("/api/login", userDataObj)
 }
 
 function signUpUser(userDataObj) {
-    $.post("/api/signup", userDataObj)
+    $.post("/api/users", userDataObj)
       .then(function(data) {
-        window.location.replace("/home");
+        console.log(data)
+        // window.location.replace("/signup-login");
+        window.alert('Signup successed')
         // If there's an error, handle it by throwing up a bootstrap alert
       })
-      .catch(handleLoginErr);
+      // .catch(handleLoginErr);
 }
