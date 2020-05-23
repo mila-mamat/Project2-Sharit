@@ -2,11 +2,13 @@ const usernameLogin = document.getElementById('usernameLogin')
 const passwordLogin = document.getElementById('passwordLogin')
 const usernameSignup = document.getElementById('usernameSignup')
 const passwordSignup = document.getElementById('passwordSignup')
+const firstNameSignup = document.getElementById('firstNameSignup')
+const lastNameSignup = document.getElementById('lastNameSignup')
 
 
 document.getElementById('loginBtn').onclick = () =>{
     let userData = {
-        email: usernameLogin.value.trim(),
+        username: usernameLogin.value.trim(),
         password: passwordLogin.value.trim()
     };
 
@@ -22,8 +24,10 @@ document.getElementById('loginBtn').onclick = () =>{
 
 document.getElementById('signupBtn').onclick = () =>{
     let userData = {
-        email: usernameSignup.value.trim(),
-        password: passwordSignup.value.trim()
+        username: usernameSignup.value.trim(),
+        password: passwordSignup.value.trim(),
+        first_name: firstNameSignup.value.trim(),
+        last_name: lastNameSignup.value.trim()
     };
 
     if (!userData.email || !userData.password) {
@@ -34,6 +38,9 @@ document.getElementById('signupBtn').onclick = () =>{
     signUpUser(userData);
     usernameSignup.value = ''
     passwordSignup.value = ''
+    firstNameSignup.value = ''
+    lastnameSignup.value = ''
+
 }
 
 function loginUser(userDataObj) {
@@ -64,4 +71,4 @@ function signUpUser(userDataObj) {
         // If there's an error, handle it by throwing up a bootstrap alert
       })
       .catch(handleLoginErr);
-  }
+}
