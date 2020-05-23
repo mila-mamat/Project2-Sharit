@@ -37,8 +37,62 @@ module.exports = app => {
     console.log(req.body);
 
     try {
-     const user = await db.User.findByPk(req.params.userId);
-     res.status(200).json({ data: user });
+      const user = await db.User.findAll({
+        where: {
+          id: req.params.userId
+        },
+        attributes: [
+          'first_name',
+          'last_name',
+          'profile_photo',
+          'birthdate',
+          'sex',
+          'city',
+          'province_state',
+          'country'
+        ],
+        include: [
+          {
+            model: db.Post,
+            attributes: [
+              'id',
+              'post_photo',
+              'text',
+              'datetime_modified'
+            ],
+            include: [
+              {
+                model: db.Comment,
+                attributes: [
+                  'id',
+                  'text',
+                  'datetime_modified'
+                ],
+                include: [
+                  {
+                    model: db.CommentLike,
+                    group: ['comment_id'],
+                    attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comment_likes']]
+                  },
+                  {
+                    model: db.User,
+                    attributes: [
+                      'first_name',
+                      'last_name'
+                    ]
+                  }
+                ]
+              },
+              {
+                model: db.PostLike,
+                group: ['post_id'],
+                attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
+              }
+            ]
+          }
+        ]
+      });
+      res.status(200).json({ data: user });
     } catch (err) {
       console.log(`GET /api/users/${req.params.userId} failed \n`, err)
       res.status(500).json({ errors: [err] }) 
@@ -81,6 +135,7 @@ module.exports = app => {
     console.log(req.body);
     
     try {
+      // TODO: Get post author and number of likes
       const posts = await db.Post.findAll();
       res.status(200).json({ data: posts });
     } catch (err) {
@@ -95,6 +150,7 @@ module.exports = app => {
     console.log(req.body);
     
     try {
+      // TODO: get post author and number of likes, and comments, comment authors and number of likes
       let post = await db.Post.findByPk(req.params.postId);
       res.status(200).json({ data: post });
     } catch (err) {
