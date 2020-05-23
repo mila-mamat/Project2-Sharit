@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       }
     });
+    Comment.hasMany(models.CommentLike, {
+      foreignKey: {
+        onDelete: 'cascade'
+      }
+    });
   };
 
   return Comment;
