@@ -124,9 +124,31 @@ module.exports = app => {
     console.log(req.body);
     
     try {
-      // TODO: Get post author and number of likes
       const posts = await db.Post.findAll({
-        
+        attributes: [
+          'id',
+          'post_photo',
+          'text',
+          'datetime_modified'
+        ],
+        include: [
+          {
+            model: db.Comment,
+            attributes: [],
+            include: [
+              {
+                model: db.CommentLike,
+                group: ['comment_id'],
+                attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comment_likes']]
+              }
+            ]
+          },
+          {
+            model: db.PostLike,
+            group: ['post_id'],
+            attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
+          }
+        ]
       });
       res.status(200).json({ data: posts });
     } catch (err) {
