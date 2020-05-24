@@ -21,8 +21,10 @@ module.exports = function (app) {
 
   app.get("/|/home", isAuthenticated, async function (req, res) {                      // if it is "/" or "/home"
     if (req.user) {
-      let posts = await db.Post.findAll()
-      console.log("posts:",posts)
+      let posts = await db.Post.findAll({
+        include :{model: db.User}
+      })
+      console.log(posts)
       res.render('home.handlebars',{posts:posts})
     } else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
   });
