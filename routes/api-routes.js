@@ -6,7 +6,7 @@ module.exports = app => {
   // Route to authenticate passport and send user to home page
   app.post("/api/login", passport.authenticate("local"), async (req, res) => {
     /* Test */
-    console.log(req.user);
+    // console.log(req.user);
     
     res.json(req.user);
   });
