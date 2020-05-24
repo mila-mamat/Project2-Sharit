@@ -8,8 +8,8 @@ const lastNameSignup = document.getElementById('lastNameSignup')
 
 document.getElementById('loginBtn').onclick = () =>{
     let userData = {
-        username: usernameLogin.value.trim(),
-        password: passwordLogin.value.trim()
+        username: usernameLogin.value,
+        password: passwordLogin.value
     };
 
     if (!userData.username || !userData.password) {
@@ -24,10 +24,10 @@ document.getElementById('loginBtn').onclick = () =>{
 
 document.getElementById('signupBtn').onclick = () =>{
     let userData = {
-        username: usernameSignup.value.trim(),
-        password: passwordSignup.value.trim(),
-        first_name: firstNameSignup.value.trim(),
-        last_name: lastNameSignup.value.trim()
+        username: usernameSignup.value,
+        password: passwordSignup.value,
+        first_name: firstNameSignup.value,
+        last_name: lastNameSignup.value
     };
 
     if (!userData.username || !userData.password || !userData.first_name || !userData.last_name) {
@@ -46,7 +46,7 @@ document.getElementById('signupBtn').onclick = () =>{
 function loginUser(userDataObj) {
 $.post("/api/login", userDataObj)
     .then(function() {
-    window.location.replace("/home");
+    window.location.replace("/profile");
     // If there's an error, log the error
     })
     .catch(function(err) {
@@ -67,7 +67,6 @@ $.post("/api/login", userDataObj)
 function signUpUser(userDataObj) {
     $.post("/api/users", userDataObj)
       .then(function(data) {
-        console.log(data)
         // window.location.replace("/signup-login");
         window.alert('Signup successed')
         // If there's an error, handle it by throwing up a bootstrap alert

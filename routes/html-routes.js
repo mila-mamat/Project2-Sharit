@@ -19,12 +19,13 @@ module.exports = function (app) {
   // If a user who is not logged in tries to access this route they will be redirected to the signup page
 
 
-  app.get("/|/home", isAuthenticated, async function (req, res) {                      // if it is "/" or "/home"
+  app.get("/|/home", isAuthenticated, async function (req, res) {  
+    // console.log('this is from html-route line 23')                    // if it is "/" or "/home"
     if (req.user) {
       let posts = await db.Post.findAll({
         include :{model: db.User}
       })
-      console.log(posts)
+      // console.log(posts)
       res.render('home.handlebars',{posts:posts})
     } else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
   });
@@ -37,12 +38,13 @@ module.exports = function (app) {
 
   // TODO: display profile page
   // Must use handlebars
-  app.get("/profile/:username", function (req, res) {
-    let profileName = req.params.username
-    console.log(profileName)
-    res.render('index', {
-      profileName
-    })
+  app.get("/profile", function (req, res) {
+    if (req.user) {
+      let userName = req.user
+      res.render('profile', {
+        profileName: userName
+      })
+    } else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
 
   });
 };
