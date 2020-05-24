@@ -46,22 +46,13 @@ document.getElementById('signupBtn').onclick = () =>{
 function loginUser(userDataObj) {
 $.post("/api/login", userDataObj)
     .then(function() {
-    window.location.replace("/profile");
+    window.location.replace("/");
     // If there's an error, log the error
     })
     .catch(function(err) {
     console.log(err);
     });
 
-
-// fetch("/api/login", {
-//     method: 'post',
-//     body: JSON.stringify(userDataObj)
-//     }).then(function(response) {
-//     console.log(response.json())
-//     }).then(function(data) {
-//     console.log(data)
-//     });
 }
 
 function signUpUser(userDataObj) {
