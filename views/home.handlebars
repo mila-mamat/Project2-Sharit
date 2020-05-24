@@ -10,25 +10,25 @@
   Share It !
 </section>
 
-{{!-- posts  --}}
 
+
+{{!-- start of main contents  --}}
 <section id="main-content">
-  {{!-- add post form  --}}
+  {{!-- create new post form  --}}
   <div class="notification">
-    <form class="field" id="post-from">
-      <textarea class="textarea is-small" placeholder="What would you like to share?" id="post-text"></textarea>
+    <form class="field" id="post-from" enctype="multipart/form-data">
+      {{!-- post text  --}}
+      <textarea class="textarea is-small" placeholder="What would you like to share?" id="post-text">
+      </textarea>
       <div class="buttons">
-
-        {{!-- adding img from folder --}}
-        <label for="file">
-          <i class="far fa-image"></i>
-          <input type="file" id="file" style="display: none" name="image"
-            accept="image/gif,image/jpeg,image/jpg,image/png" multiple="" data-original-title="upload photos">
-        </label>
-
         <input type="reset">
-        <input type="submit">
-
+        <input type="submit" id="reset">
+        {{!-- post img  --}}
+        <div>
+          <label for="files" class="btn"><i class="far fa-image"></i></label>
+          <input id="files" style="display:none" type="file">
+        </div>
+        <div id="selected-img"></div>
       </div>
     </form>
   </div>
@@ -46,52 +46,45 @@
 
     {{#each posts}}
 
-
     <div class="grid-item">
       <div class="card">
         <header class="card-header">
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-          <a class="card-header-title author is-flex" href="/profile/{{s}}" target="_blank" id="user-ID">
-=======
           <a class="card-header-title author is-flex" href="/" target="_blank" id="user-ID">
->>>>>>> Stashed changes
-=======
-          <a class="card-header-title author is-flex" href="/" target="_blank" id="user-ID">
->>>>>>> Stashed changes
             {{!--HERE: add link to the authors avatar in the href--}}
             <figure class="avatar image is-32x32">
               <img class="is-rounded"
                 src="https://pbs.twimg.com/profile_images/663874141854961666/HXz-_UA4_normal.jpg" />
             </figure>
 
-            {{!--HERE: get auther name from database--}}
+
             <div class="author-name">
+              {{dataValues.User.dataValues.username}}
             </div>
           </a>
 
-          {{!--HERE: get post modified data from database--}}
-          <time datetime="2016-1-1" class="post-date">{{dataValues.createdAt}}</time>
+          {{!--HERE: get post modified data from database         //need to format it --}}
+          <time class="post-date">{{dataValues.createdAt}}</time>
         </header>
 
         <div class="card-content">
-          {{!--HERE: get post content from database--}}
           <div class="content">
-            <hr>
-            <p>
-              {{dataValues.id}}
-              {{dataValues.text}}
-              {{dataValues.user_id}}
+            {{dataValues.text}}
 
-            </p>
+
+
             {{!--HERE: get post post photo from database, if exists--}}
+            {{#if dataValues.post_photo}}
             <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/one-world-trade.jpg" />
+
+            {{/if}}
           </div>
         </div>
         <footer class="card-footer">
           <a href="" class="card-footer-item"><i class="far fa-heart"></i></a>
           <a href="" class="card-footer-item"><i class="far fa-comment"></i></a>
-          <a href="" class="card-footer-item"><i class="far fa-user-circle"></i></a>
+          {{!-- leads to user profile page  --}}
+          <a href="api/users/{{dataValues.UserId}}" target="_blank" class="card-footer-item"><i
+              class="far fa-user-circle"></i></a>
         </footer>
       </div>
     </div>

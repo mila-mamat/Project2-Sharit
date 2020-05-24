@@ -92,7 +92,6 @@ module.exports = app => {
   app.patch("/api/users/:userId", async (req, res) => {
     /* Test */
     console.log(req.body);
-    
     try {
       let user = await db.User.findByPk(req.params.userId);
       if (!user) return res.status(404).json({ errors: [{ title: 'Not found' }] });
@@ -104,13 +103,14 @@ module.exports = app => {
     }
   });
 
-  // Route to create post on main page
+  // Route to create post on main page          //done except the p
   app.post("/api/posts", async (req, res) => {
-    /* Test */
+    req.body.UserId = req.user.id
     console.log(req.body);
     
     try {
       const post = await db.Post.create(req.body);
+      console.log(post)
       res.status(200).json({ data: post });
     } catch (err) {
       console.log(`POST /api/posts failed \n`, err)

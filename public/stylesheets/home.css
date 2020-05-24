@@ -64,11 +64,15 @@ border:red 1px solid
 
 #main-content form .buttons {
 display:flex;
-justify-content: flex-end;
+justify-content: flex-start;
 }
 #main-content form .buttons > *{
 margin:5px 10px;
+}
 
+#main-content form img{
+ height:auto;
+width:100px;
 }
 
 /* clear fix */
