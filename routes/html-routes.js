@@ -24,7 +24,8 @@ module.exports = function (app) {
   app.get("/", isAuthenticated, async function (req, res) { 
     if (req.user) {
       let posts = await db.Post.findAll({
-        include :{model: db.User}
+        include :{model: db.User},
+        order: [['updatedAt', 'DESC']]
       })
       // console.log(posts)
       res.render('home',{posts:posts})
@@ -47,9 +48,9 @@ module.exports = function (app) {
       let userName = `${req.user.first_name} ${req.user.last_name}`
       let currentUserPosts = await db.Post.findAll({
         where : {UserId: req.user.id},
-        include : {model: db.User}
+        include : {model: db.User},
       })
-
+       
       res.render('profile', {
         posts: currentUserPosts,
         userName : userName

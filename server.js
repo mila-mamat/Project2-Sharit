@@ -6,6 +6,9 @@ const passport = require("./config/passport");
 
 const exphbs = require('express-handlebars')
 
+const path = require('path')
+const fileUpload = require('express-fileupload')
+
 // Setting up port and requiring models for syncing
 const PORT = process.env.PORT || 8080;
 const db = require("./models");
@@ -14,11 +17,25 @@ const db = require("./models");
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static("public"));
+
+//upload and save img
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: path.join(__dirname, 'tmp')
+  })
+)
+
+ // Allow Express to automatically serve static resource like the
+// HTML, CSS and JavaScript for the frontend client application.
+app.use(express.static('./public'))
+
+
 // We need to use sessions to keep track of our user's login status
 app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 // Set up the Express app to use the Handlebars template engine
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
