@@ -12,7 +12,9 @@ module.exports = function (app) {
     if (req.user) {
       // res.sendFile(path.join(__dirname, "../public/home.html"));              // delete later
       res.render('home')
-    } else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
+    } 
+    // else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
+    else res.render('signup-login',{})
   });
 
   // Here we've add our isAuthenticated middleware to this route.
@@ -26,7 +28,9 @@ module.exports = function (app) {
       })
       // console.log(posts)
       res.render('home',{posts:posts})
-    } else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
+    } 
+    // else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
+    else res.render('signup-login',{})
   });
 
 
@@ -44,27 +48,28 @@ module.exports = function (app) {
       res.render('profile', {
         profileName: userName
       })
-    } else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
+    } 
+    // else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
+    else res.render('signup-login',{})
+    
 
   });
 
-  app.get("/:profileID", function (req, res) {
+  app.get("/profile/:profileID", function (req, res) {
 
-    if(req.user === req.params.profileID)
+    console.log(req.user.id)
+    console
+    if(req.user)
     {
       let userName = req.user
       res.render('profile', {
         profileName: userName
       })
     }
+    // else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
+    else res.render('signup-login',{})
 
-    else if (req.user) {
-      let userName = req.params.profileID
-      res.send(userName)
-    } else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
 
   });
 
-
-  // app.get("/:profileID")
 };
