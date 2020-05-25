@@ -29,165 +29,64 @@
   </div>
 </nav>
 
-<div class="card">
-  <div class="card-image">
-    <figure class="image is-4by3">
-      <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-    </figure>
-  </div>
-  <div class="card-content">
-    <div class="media">
-      <div class="media-left">
-        <figure class="image is-48x48">
-          <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-        </figure>
-      </div>
-      <div class="media-content">
-        <p class="title is-4">{{profileName}}</p>
-        <p class="subtitle is-6">{{profileName}}@gmail.com</p>
-      </div>
-    </div>
 
-    <div class="content">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-      <a href="#">#css</a> <a href="#">#responsive</a>
-      <br>
-      <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-    </div>
-  </div>
-</div> --}}
-
-<div class="columns is-mobile">
+<div class="columns is-mobile" style="margin-top: 3em;">
   <div class="column is-half is-offset-one-quarter has-text-centered">
-      <p class="title is-4">{{profileName}}</p>
-      <p class="subtitle is-6">{{profileName}}@gmail.com</p>
+    Profile Page : {{userName}}
   </div>
 </div>
 
 
-<div class="columns">
-  <div class="column">
-    <div class="card">
-  <div class="card-image">
-    <figure class="image is-4by3">
-      <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-    </figure>
-  </div>
-  <div class="card-content">
-    <div class="media">
-      <div class="media-left">
-        <figure class="image is-48x48">
-          <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-        </figure>
-      </div>
-      <div class="media-content">
-        <p class="title is-4">{{profileName}}</p>
-        <p class="subtitle is-6">{{profileName}}@gmail.com</p>
+  {{!-- display posts for current user  --}}
+  <div class="grid">
+    {{!-- grid-sizer required for the masonry working --}}
+    <div class="grid-sizer"></div>
+
+    {{#each posts}}
+
+    <div class="grid-item">
+      <div class="card">
+        <header class="card-header">
+          <a class="card-header-title author is-flex" href="/" target="_blank" id="user-ID">
+            {{!--HERE: add link to the authors avatar in the href--}}
+            <figure class="avatar image is-32x32">
+              <img class="is-rounded"
+                src="https://pbs.twimg.com/profile_images/663874141854961666/HXz-_UA4_normal.jpg" />
+            </figure>
+
+
+            <div class="author-name">
+              {{dataValues.User.dataValues.username}}
+            </div>
+          </a>
+
+          {{!--HERE: get post modified data from database         //need to format it --}}
+          <time class="post-date">{{dataValues.createdAt}}</time>
+        </header>
+
+        <div class="card-content">
+          <div class="content">
+            {{dataValues.text}}
+
+
+
+            {{!--HERE: get post post photo from database, if exists--}}
+            {{#if dataValues.post_photo}}
+            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/one-world-trade.jpg" />
+
+            {{/if}}
+          </div>
+        </div>
+        <footer class="card-footer">
+          <a href="" class="card-footer-item"><i class="far fa-heart"></i></a>
+          <a href="" class="card-footer-item"><i class="far fa-comment"></i></a>
+          {{!-- leads to user profile page  --}}
+          <a href="api/users/{{dataValues.UserId}}" target="_blank" class="card-footer-item"><i
+              class="far fa-user-circle"></i></a>
+        </footer>
       </div>
     </div>
 
-    <div class="content">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-      <a href="#">#css</a> <a href="#">#responsive</a>
-      <br>
-      <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-    </div>
-  </div>
-</div>
-  </div>
-  <div class="column">
-    <div class="card">
-  <div class="card-image">
-    <figure class="image is-4by3">
-      <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-    </figure>
-  </div>
-  <div class="card-content">
-    <div class="media">
-      <div class="media-left">
-        <figure class="image is-48x48">
-          <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-        </figure>
-      </div>
-      <div class="media-content">
-        <p class="title is-4">{{profileName}}</p>
-        <p class="subtitle is-6">{{profileName}}@gmail.com</p>
-      </div>
-    </div>
+    {{/each}}
 
-    <div class="content">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-      <a href="#">#css</a> <a href="#">#responsive</a>
-      <br>
-      <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-    </div>
-  </div>
-</div>
-  </div>
-  <div class="column">
-    <div class="card">
-  <div class="card-image">
-    <figure class="image is-4by3">
-      <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-    </figure>
-  </div>
-  <div class="card-content">
-    <div class="media">
-      <div class="media-left">
-        <figure class="image is-48x48">
-          <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-        </figure>
-      </div>
-      <div class="media-content">
-        <p class="title is-4">{{profileName}}</p>
-        <p class="subtitle is-6">{{profileName}}@gmail.com</p>
-      </div>
-    </div>
-
-    <div class="content">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-      <a href="#">#css</a> <a href="#">#responsive</a>
-      <br>
-      <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-    </div>
-  </div>
-</div>
-  </div>
-  <div class="column">
-    <div class="card">
-  <div class="card-image">
-    <figure class="image is-4by3">
-      <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-    </figure>
-  </div>
-  <div class="card-content">
-    <div class="media">
-      <div class="media-left">
-        <figure class="image is-48x48">
-          <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
-        </figure>
-      </div>
-      <div class="media-content">
-        <p class="title is-4">{{profileName}}</p>
-        <p class="subtitle is-6">{{profileName}}@gmail.com</p>
-      </div>
-    </div>
-
-    <div class="content">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-      <a href="#">#css</a> <a href="#">#responsive</a>
-      <br>
-      <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-    </div>
-  </div>
-</div>
-  </div>
-</div>
-
-<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
-<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.js"></script>
+  </div> 

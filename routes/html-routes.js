@@ -23,6 +23,9 @@ module.exports = function (app) {
 
   app.get("/", isAuthenticated, async function (req, res) { 
     if (req.user) {
+      console.log('*******************************')
+      console.log(req.user)
+      console.log('*******************************')
       let posts = await db.Post.findAll({
         include :{model: db.User}
       })
@@ -41,13 +44,20 @@ module.exports = function (app) {
 
   // TODO: display profile page
   // Must use handlebars
-  app.get("/profile", function (req, res) {
+  app.get("/profile", async function (req, res) {
 
     if (req.user) {
-      let userName = req.user
-      res.render('profile', {
-        profileName: userName
+      let userName = `${req.user.first_name} ${req.user.last_name}`
+      let currentUserPosts = await db.Post.findAll({
+        where : {UserId: req.user.id},
+        include : {model: db.User}
       })
+
+      res.render('profile', {
+        posts: currentUserPosts,
+        userName : userName
+      })
+      
     } 
     // else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
     else res.render('signup-login',{})
