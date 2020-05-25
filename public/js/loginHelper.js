@@ -45,22 +45,21 @@ document.getElementById('signupBtn').onclick = () =>{
 
 function loginUser(userDataObj) {
 $.post("/api/login", userDataObj)
-    .then(function() {
+    .done(function() {
     window.location.replace("/");
-    // If there's an error, log the error
     })
-    .catch(function(err) {
-    console.log(err);
-    });
+    .fail(function() {
+      alert( "Login Fail, invalid user name or password" );
+    })
 
 }
 
 function signUpUser(userDataObj) {
-    $.post("/api/users", userDataObj)
-      .then(function(data) {
-        // window.location.replace("/signup-login");
-        window.alert('Signup successed')
-        // If there's an error, handle it by throwing up a bootstrap alert
-      })
-      // .catch(handleLoginErr);
+  $.post("/api/users", userDataObj)
+    .done(function() {
+      window.alert('Signup succeeded, ready to login!')
+    })
+    .fail(function() {
+      alert( "Fail to create a new user" );
+    })
 }
