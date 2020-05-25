@@ -137,53 +137,6 @@ module.exports = app => {
 
 
 
-  // Route to display posts on main page
-  app.get("/api/posts", async (req, res) => {
-    /* Test */
-    console.log(req.body);
-    
-    try {
-      const posts = await db.Post.findAll({
-        attributes: [
-          'id',
-          'post_photo',
-          'text',
-          'datetime_modified'
-        ],
-        include: [
-          {
-            model: db.Comment,
-            attributes: [],
-            include: [
-              {
-                model: db.CommentLike,
-                group: ['comment_id'],
-                attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comment_likes']]
-              }
-            ]
-          },
-          {
-            model: db.PostLike,
-            group: ['post_id'],
-            attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
-          },
-          {
-            model: db.User,
-            attributes: [
-              'first_name',
-              'last_name',
-              'profile_photo'
-            ]
-          }
-        ]
-      });
-      res.status(200).json({ data: posts });
-    } catch (err) {
-      console.log(`GET /api/posts failed \n`, err)
-      res.status(500).json({ errors: [err] }) 
-    }
-  });
-
   // Route to display single post on post page
   app.get("/api/posts/:postId", async (req, res) => {
     /* Test */

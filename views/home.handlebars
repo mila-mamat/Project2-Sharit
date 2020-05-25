@@ -50,8 +50,7 @@
   <div class="notification">
     <form class="field" id="post-from" action="/api/posts" method="post" enctype="multipart/form-data">
       {{!-- post text  --}}
-      <textarea class="textarea is-small" placeholder="What would you like to share?" id="text" name="text">
-      </textarea>
+      <textarea class="textarea" rows="2" placeholder="What would you like to share?" id="text" name="text"></textarea>
       <div class="buttons">
         <input type="reset">
         <input type="submit" id="reset">
@@ -67,67 +66,49 @@
 
 
 
-
   {{!-- display posts  --}}
   <div class="grid">
     {{!-- grid-sizer required for the masonry working --}}
     <div class="grid-sizer"></div>
 
-
-
-
     {{#each posts}}
+      <div class="grid-item">
+        <div class="card">
+          <header class="card-header">
+            <a class="card-header-title author is-flex" href="/profile" id="user-ID">
+              {{!--HERE: add link to the authors avatar in the href--}}
+              <figure class="avatar image is-32x32">
+                <img class="is-rounded" src="{{dataValues.User.dataValues.profile_photo}}" alt="profile photo">
+              </figure>
+              <div class="author-name">
+                {{dataValues.User.dataValues.username}}
+              </div>
+            </a>
 
-    <div class="grid-item">
-      <div class="card">
-        <header class="card-header">
-          <a class="card-header-title author is-flex" href="/" target="_blank" id="user-ID">
-            {{!--HERE: add link to the authors avatar in the href--}}
-            <figure class="avatar image is-32x32">
-              <img class="is-rounded" src="{{dataValues.User.dataValues.profile_photo}}" alt="profile photo" >
-              
-            </figure>
+            {{!--get post modified data from database         //need to format it --}}
+            <time class="post-date" >{{dataValues.createdAt}}</time>
+          </header>
 
-
-            <div class="author-name">
-              {{dataValues.User.dataValues.username}}
+          <div class="card-content">
+            <div class="content">
+              {{dataValues.text}}
+              {{!-- get post post photo from database, if exists--}}
+              {{#if dataValues.post_photo}}
+              <img src="{{dataValues.post_photo}}" alt="post photo">
+              {{/if}}
             </div>
-          </a>
-
-          {{!--HERE: get post modified data from database         //need to format it --}}
-          <time class="post-date">{{dataValues.createdAt}}</time>
-        </header>
-
-        <div class="card-content">
-          <div class="content">
-            {{dataValues.text}}
-
-
-
-            {{!--HERE: get post post photo from database, if exists--}}
-            {{#if dataValues.post_photo}}
-
-            <img src="{{dataValues.post_photo}}" alt="post photo" >
-
-            {{/if}}
           </div>
+          <footer class="card-footer">
+            <a href="" class="card-footer-item"><i class="far fa-heart"></i></a>
+            <a href="" class="card-footer-item"><i class="far fa-comment"></i></a>
+            {{!-- leads to user profile page  --}}
+            <a href="api/users/{{dataValues.UserId}}" target="_blank" class="card-footer-item"><i
+                class="far fa-user-circle"></i></a>
+          </footer>
         </div>
-        <footer class="card-footer">
-          <a href="" class="card-footer-item"><i class="far fa-heart"></i></a>
-          <a href="" class="card-footer-item"><i class="far fa-comment"></i></a>
-          {{!-- leads to user profile page  --}}
-          <a href="api/users/{{dataValues.UserId}}" target="_blank" class="card-footer-item"><i
-              class="far fa-user-circle"></i></a>
-        </footer>
       </div>
-    </div>
 
     {{/each}}
-
-
-
-
-
   </div> {{!-- end of grid container--}}
 </section>
 
@@ -141,3 +122,4 @@
 
 
 <script type="text/javascript" src="js/home.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
