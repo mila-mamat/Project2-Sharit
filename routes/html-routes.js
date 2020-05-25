@@ -23,9 +23,6 @@ module.exports = function (app) {
 
   app.get("/", isAuthenticated, async function (req, res) { 
     if (req.user) {
-      console.log('*******************************')
-      console.log(req.user)
-      console.log('*******************************')
       let posts = await db.Post.findAll({
         include :{model: db.User}
       })
@@ -33,7 +30,7 @@ module.exports = function (app) {
       res.render('home',{posts:posts})
     } 
     // else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
-    else res.render('signup-login',{})
+    else res.redirect("/signup-login");
   });
 
 
@@ -59,25 +56,33 @@ module.exports = function (app) {
       })
       
     } 
-    // else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
-    else res.render('signup-login',{})
+    else res.redirect("/signup-login");
     
 
   });
 
-  app.get("/profile/:profileID", function (req, res) {
+  app.get("/profile/:profileUserName", async function (req, res) {
 
-    console.log(req.user.id)
-    console
     if(req.user)
-    {
-      let userName = req.user
+    {// find the user info from the User table
+      let userInfo = await db.User.findOne({
+        where : {username: req.params.profileUserName}
+      })
+      // find user name and ID
+      let userName = `${userInfo.first_name} ${userInfo.last_name}`
+      // extract user information
+      let otherUserPosts = await db.Post.findAll({
+        where : {UserId: userInfo.id},
+        include : {model: db.User}
+      })
+      // render user's post etc
       res.render('profile', {
-        profileName: userName
+        posts: otherUserPosts,
+        userName : userName
       })
     }
     // else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
-    else res.render('signup-login',{})
+    else res.redirect("/signup-login");
 
 
   });

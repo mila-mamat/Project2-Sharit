@@ -3,7 +3,7 @@
   <div class="container">
     {{!-- sharit logo  --}}
     <div class="navbar-brand">
-      <a class="navbar-item has-text-weight-bold is-size-3" href="/home">
+      <a class="navbar-item has-text-weight-bold is-size-3" href="/">
         Shar <span>it</span>
       </a>
       <div class="navbar-burger burger" data-target="nav-menu">
@@ -29,10 +29,15 @@
   </div>
 </nav>
 
-
+{{!-- TODO : move style to css file --}}
 <div class="columns is-mobile" style="margin-top: 3em;">
   <div class="column is-half is-offset-one-quarter has-text-centered">
-    Profile Page : {{userName}}
+    <div class="columns is-mobile is-centered" style = "margin-bottom: 1em;">
+      <figure class="image is-64x64">
+          <img class="is-rounded" src="https://pbs.twimg.com/profile_images/663874141854961666/HXz-_UA4_normal.jpg" />
+      </figure>
+    </div>
+    {{userName}}
   </div>
 </div>
 
@@ -47,18 +52,7 @@
     <div class="grid-item">
       <div class="card">
         <header class="card-header">
-          <a class="card-header-title author is-flex" href="/" target="_blank" id="user-ID">
-            {{!--HERE: add link to the authors avatar in the href--}}
-            <figure class="avatar image is-32x32">
-              <img class="is-rounded"
-                src="https://pbs.twimg.com/profile_images/663874141854961666/HXz-_UA4_normal.jpg" />
-            </figure>
-
-
-            <div class="author-name">
-              {{dataValues.User.dataValues.username}}
-            </div>
-          </a>
+          <h2 class='card-header-title'>Post date:</h2>
 
           {{!--HERE: get post modified data from database         //need to format it --}}
           <time class="post-date">{{dataValues.createdAt}}</time>
