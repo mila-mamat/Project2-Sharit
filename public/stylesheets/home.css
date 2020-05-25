@@ -59,12 +59,19 @@ border:red 1px solid
   margin:10px;
   padding:20px;
   background-color: white;
-  font-size: 16px;
 }
+
+
+
 
 #main-content form .buttons {
 display:flex;
 justify-content: flex-start;
+
+}
+
+#main-content form textarea{
+  font-size: 16px !important;
 }
 #main-content form .buttons > *{
 margin:5px 10px;
