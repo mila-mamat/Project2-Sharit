@@ -12,7 +12,9 @@ module.exports = function (app) {
     if (req.user) {
       // res.sendFile(path.join(__dirname, "../public/home.html"));              // delete later
       res.render('home')
-    } else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
+    } 
+    // else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
+    else res.render('signup-login',{})
   });
 
   // Here we've add our isAuthenticated middleware to this route.
@@ -26,7 +28,9 @@ module.exports = function (app) {
       })
       // console.log(posts)
       res.render('home',{posts:posts})
-    } else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
+    } 
+    // else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
+    else res.redirect("/signup-login");
   });
 
 
@@ -37,34 +41,50 @@ module.exports = function (app) {
 
   // TODO: display profile page
   // Must use handlebars
-  app.get("/profile", function (req, res) {
+  app.get("/profile", async function (req, res) {
 
     if (req.user) {
-      let userName = req.user
-      res.render('profile', {
-        profileName: userName
+      let userName = `${req.user.first_name} ${req.user.last_name}`
+      let currentUserPosts = await db.Post.findAll({
+        where : {UserId: req.user.id},
+        include : {model: db.User}
       })
-    } else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
+
+      res.render('profile', {
+        posts: currentUserPosts,
+        userName : userName
+      })
+      
+    } 
+    else res.redirect("/signup-login");
+    
 
   });
 
-  app.get("/:profileID", function (req, res) {
+  app.get("/profile/:profileUserName", async function (req, res) {
 
-    if(req.user === req.params.profileID)
-    {
-      let userName = req.user
+    if(req.user)
+    {// find the user info from the User table
+      let userInfo = await db.User.findOne({
+        where : {username: req.params.profileUserName}
+      })
+      // find user name and ID
+      let userName = `${userInfo.first_name} ${userInfo.last_name}`
+      // extract user information
+      let otherUserPosts = await db.Post.findAll({
+        where : {UserId: userInfo.id},
+        include : {model: db.User}
+      })
+      // render user's post etc
       res.render('profile', {
-        profileName: userName
+        posts: otherUserPosts,
+        userName : userName
       })
     }
+    // else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
+    else res.redirect("/signup-login");
 
-    else if (req.user) {
-      let userName = req.params.profileID
-      res.send(userName)
-    } else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
 
   });
 
-
-  // app.get("/:profileID")
 };
