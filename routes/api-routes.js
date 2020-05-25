@@ -2,6 +2,9 @@
 const db = require("../models");
 const passport = require("../config/passport");
 
+//add img
+const path = require('path')
+
 module.exports = app => {
   // Route to authenticate passport and send user to home page
   app.post("/api/login", passport.authenticate("local"), async (req, res) => {
@@ -24,6 +27,11 @@ module.exports = app => {
 
     try {
       const user = await db.User.create(req.body);
+      
+      //add default profile photo
+      user.profile_photo = `/avatars/profile-placeholder.png`;
+      user.save()
+
       res.status(200).json({ data: user });
     } catch (err) {
       console.log(`POST /api/users failed \n`, err)
@@ -103,20 +111,31 @@ module.exports = app => {
     }
   });
 
-  // Route to create post on main page          //done except the p
+  // Route to create post on main page         
   app.post("/api/posts", async (req, res) => {
     req.body.UserId = req.user.id
-    console.log(req.body);
     
     try {
       const post = await db.Post.create(req.body);
-      console.log(post)
-      res.status(200).json({ data: post });
+      if (req.files) {
+        const post_photo = req.files.post_photo
+        // Prepend the fileName with the User.id to prevent naming collisions
+        // with other users uploading files with the same name.
+        const fileName = `${post_photo.name}`
+        // Move the file from the tmp location to the public folder.
+        await post_photo.mv(path.join(__dirname, '..', 'public', 'postphoto', fileName))
+        // Record the public URL on the User model and store it in the database.
+        post.post_photo = `/postphoto/${fileName}`;
+        post.save()
+      }
+      res.status(200).redirect("/");
     } catch (err) {
       console.log(`POST /api/posts failed \n`, err)
       res.status(500).json({ errors: [err] }) 
     }
   });
+
+
 
   // Route to display posts on main page
   app.get("/api/posts", async (req, res) => {

@@ -1,4 +1,4 @@
-	{{!-- navbar  --}}
+{{!-- navbar  --}}
 <nav class="navbar is-fixed-top is-dark">
   <div class="container">
     {{!-- sharit logo  --}}
@@ -48,17 +48,17 @@
 <section id="main-content">
   {{!-- create new post form  --}}
   <div class="notification">
-    <form class="field" id="post-from" enctype="multipart/form-data">
+    <form class="field" id="post-from" action="/api/posts" method="post" enctype="multipart/form-data">
       {{!-- post text  --}}
-      <textarea class="textarea is-small" placeholder="What would you like to share?" id="post-text">
+      <textarea class="textarea is-small" placeholder="What would you like to share?" id="text" name="text">
       </textarea>
       <div class="buttons">
         <input type="reset">
         <input type="submit" id="reset">
         {{!-- post img  --}}
         <div>
-          <label for="files" class="btn"><i class="far fa-image"></i></label>
-          <input id="files" style="display:none" type="file">
+          <label for="post_photo" class="btn"><i class="far fa-image"></i></label>
+          <input id="post_photo" style="display:none" type="file" name="post_photo">
         </div>
         <div id="selected-img"></div>
       </div>
@@ -84,8 +84,8 @@
           <a class="card-header-title author is-flex" href="/" target="_blank" id="user-ID">
             {{!--HERE: add link to the authors avatar in the href--}}
             <figure class="avatar image is-32x32">
-              <img class="is-rounded"
-                src="https://pbs.twimg.com/profile_images/663874141854961666/HXz-_UA4_normal.jpg" />
+              <img class="is-rounded" src="{{dataValues.User.dataValues.profile_photo}}" alt="profile photo" >
+              
             </figure>
 
 
@@ -106,7 +106,8 @@
 
             {{!--HERE: get post post photo from database, if exists--}}
             {{#if dataValues.post_photo}}
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/one-world-trade.jpg" />
+
+            <img src="{{dataValues.post_photo}}" alt="post photo" >
 
             {{/if}}
           </div>
