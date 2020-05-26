@@ -4,6 +4,7 @@ var moment = require('moment');
 const db = require("../models");
 var isAuthenticated = require("../config/middleware/isAuthenticated");
 const passport = require('../config/passport');
+const Sequelize = require('sequelize');
 
 module.exports = function (app) {
   // Route to sign user up
@@ -41,8 +42,8 @@ module.exports = function (app) {
     } else res.redirect("/signup-login");
   });
 
-  // TODO: Route to render post view
-  app.get("/post/:postId", function (req, res) {
+  // Route to render post view
+  app.get("/post/:postId", async function (req, res) {
     if (req.user) {
       const post = await db.Post.findOne({
         where: {
@@ -84,7 +85,7 @@ module.exports = function (app) {
       let fullName = `${req.user.first_name} ${req.user.last_name}`;
       let user = await db.User.findOne({
         where: {
-          UserId: req.user.id
+          id: req.user.id
         },
         include: [
           {
