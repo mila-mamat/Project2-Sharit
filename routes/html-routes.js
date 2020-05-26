@@ -56,7 +56,8 @@ module.exports = function (app) {
         where : {UserId: req.user.id},
         include : {model: db.User},
       })
-       
+      
+      
       res.render('profile', {
         posts: currentUserPosts,
         userName : userName

@@ -38,7 +38,6 @@ border:red 1px solid
     margin: 2em;
 }
 
-
 /* navbar  */
 .navbar-brand, .slogan  {
     font-family:'Pattaya', sans-serif;
@@ -48,9 +47,6 @@ border:red 1px solid
   .navbar-brand a span {
     color:#fa7000
   }
-  
-  
-  
   
 
 
@@ -176,3 +172,41 @@ border:red 1px solid
   
   /* end of posts masonry  */
   
+  /* profile image handling  */
+  .is-clickable {
+    cursor: pointer;
+  }
+
+  .image is-profile {
+    opacity: 1;
+    /* width: 100%;
+    height: auto; */
+    transition: .5s ease;
+    backface-visibility: hidden;
+  }
+  
+  .middle {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 80%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+  .profile-container:hover img {
+    opacity: 0.3;
+  }
+  
+  .profile-container:hover .middle {
+    opacity: 1;
+  }
+  
+  .change-profile-btn {
+    background-color: black;
+    color: white;
+    font-size: 12px;
+    padding: 2%;
+  }

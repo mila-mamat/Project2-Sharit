@@ -97,14 +97,27 @@ module.exports = app => {
   });
 
   // Route to edit user info on profile page
-  app.patch("/api/users/:userId", async (req, res) => {
+  app.patch("/api/users/profile", async (req, res) => {
     /* Test */
     console.log(req.body);
+    let userID = req.user.id
     try {
-      let user = await db.User.findByPk(req.params.userId);
+      let user = await db.User.findByPk(userID);
       if (!user) return res.status(404).json({ errors: [{ title: 'Not found' }] });
       user = await db.User.update(req.body);
-      res.status(200).json({ data: user });
+
+      if (req.files) {
+        const profile_photo = req.files.profile_photo
+        // Prepend the fileName with the User.id to prevent naming collisions
+        // with other users uploading files with the same name.
+        const fileName = `${profile_photo.name}`
+        // Move the file from the tmp location to the public folder.
+        await profile_photo.mv(path.join(__dirname, '..', 'public', 'avatars', fileName))
+        // Record the public URL on the User model and store it in the database.
+        user.profile_photo = `/avatars/${fileName}`;
+        user.save()
+      }
+      // res.status(200).json({ data: user });
     } catch (err) {
       console.log(`PATCH /api/users/${req.params.userId} failed \n`, err)
       res.status(500).json({ errors: [err] }) 
