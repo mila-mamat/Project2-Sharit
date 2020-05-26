@@ -351,7 +351,9 @@ module.exports = app => {
         // Record the public URL on the User model and store it in the database.
         user.profile_photo = `/avatars/${fileName}`;
         user.save();
-        res.status(200).redirect("/profile");
+        res.status(200).redirect(`/profile/${user.dataValues.username}`);
+        // res.status(200).json(userURL);
+        // res.status(200).json({ data: userURL })
       }
      } catch (err) {
       console.log(`Post /api/users/${req.params.userId} failed \n`, err)    //??

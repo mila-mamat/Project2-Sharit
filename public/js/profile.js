@@ -1,7 +1,9 @@
 
 // submit profile avatar if uploaded 
 $("#profile_photo").change(function (e) {
- $("#avatar-form").submit();
+ $("#avatar-form").submit().done(function(data) {
+  window.location.replace("/")
+});
   });
 
 console.log("here")
