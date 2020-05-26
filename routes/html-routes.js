@@ -1,14 +1,20 @@
-// Requiring path to so we can use relative routes to our HTML files
-var path = require("path");
-//format the data displayed on posts
+// Import depenencies
+var path = require('path');
 var moment = require('moment');
-
 const db = require("../models");
-
-// Requiring our custom middleware for checking if a user is logged in
 var isAuthenticated = require("../config/middleware/isAuthenticated");
 
 module.exports = function (app) {
+  // Route to authenticate passport and send user to home page
+  app.post("/login", passport.authenticate("local"), async (req, res) => {
+    res.json(req.user);
+  });
+
+  // Route to log user out
+  app.get("/logout", async (req, res) => {
+    req.logout();
+    res.redirect("/");
+  });
 
   app.get("/signup-login", function (req, res) {
     // If the user already has an account send them to the home page
