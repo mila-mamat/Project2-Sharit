@@ -81,7 +81,8 @@ module.exports = function (app) {
                 group: ['CommentId'],
                 attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comment_likes']]
               }
-            ]
+            ], 
+            order: [['updatedAt', 'DESC']]
           }
         ]
       });
@@ -101,26 +102,17 @@ module.exports = function (app) {
         },
         include: [
           {
-            model: db.Post,
-            include: [
-              {
-                model: db.Comment,
-                include: [
-                  {
-                    model: db.CommentLike,
-                    group: ['CommentId'],
-                    attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comment_likes']]
-                  }
-                ]
-              },
-              {
-                model: db.PostLike,
-                group: ['PostId'],
-                attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
-              }
-            ]
+            model: db.PostLike,
+            group: ['PostId'],
+            attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
+          },
+          {
+            model: db.Comment,
+            group: ['PostId'],
+            attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comments']]
           }
-        ]
+        ], 
+        order: [['updatedAt', 'DESC']]
       });
       res.render('profile', {
         fullName: fullName,
@@ -135,30 +127,21 @@ module.exports = function (app) {
       let fullName = `${user.first_name} ${user.last_name}`
       let user = await db.User.findOne({
         where: {
-          username: req.params.userName
+          id: req.user.id
         },
         include: [
           {
-            model: db.Post,
-            include: [
-              {
-                model: db.Comment,
-                include: [
-                  {
-                    model: db.CommentLike,
-                    group: ['comment_id'],
-                    attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comment_likes']]
-                  }
-                ]
-              },
-              {
-                model: db.PostLike,
-                group: ['post_id'],
-                attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
-              }
-            ]
+            model: db.PostLike,
+            group: ['PostId'],
+            attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
+          },
+          {
+            model: db.Comment,
+            group: ['PostId'],
+            attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comments']]
           }
-        ]
+        ], 
+        order: [['updatedAt', 'DESC']]
       });
       res.render('profile', {
         fullName: fullName,
