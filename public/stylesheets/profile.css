@@ -1,4 +1,5 @@
 
+
 /* general  */
 * { box-sizing: border-box; }
 
@@ -209,4 +210,13 @@ border:red 1px solid
     color: white;
     font-size: 12px;
     padding: 2%;
+  }
+
+
+  #isOwner{
+   display:none;
+  }
+
+  .edit-option {
+    display:none;
   }

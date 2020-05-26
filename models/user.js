@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
       validate: {
         len: [6, 30],
-        isAlphanumeric: true
       }
     },
     password: {
@@ -42,7 +41,8 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     profile_photo: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      defaultValue: '/avatars/profile-placeholder.png',
     },
     birthdate: {
       type: DataTypes.DATE(6),

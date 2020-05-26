@@ -44,6 +44,7 @@ module.exports = function (app) {
         order: [["updatedAt", "DESC"]],
       });
 
+      
       posts = posts.map(function (post) {
         post.dataValues.createdAt = moment(post.createdAt).format("lll"); //format time stamp
         post.dataValues.commentNum = post.Comments.length; //count the comments and likes
@@ -97,59 +98,73 @@ module.exports = function (app) {
   // Route to render own profile view
   app.get("/profile", async function (req, res) {
     if (req.user) {
-      let fullName = `${req.user.first_name} ${req.user.last_name}`;
-      let user = await db.User.findOne({
+   
+      let userInfo = await db.User.findOne({
         where: {
           id: req.user.id,
         },
         include: [
           {
-            model: db.PostLike,
-            group: ["PostId"],
-            attributes: [[Sequelize.fn("COUNT", "id"), "count_post_likes"]],
+            model: db.Post,
           },
           {
             model: db.Comment,
-            group: ["PostId"],
-            attributes: [[Sequelize.fn("COUNT", "id"), "count_comments"]],
+          },
+          {
+            model: db.PostLike,
           },
         ],
         order: [["updatedAt", "DESC"]],
+    
       });
-      res.render("profile", {
-        fullName: fullName,
-        user: user,
+        userInfo.dataValues.isProfileOwner = true;
+        userInfo.Posts = userInfo.Posts.map(function (post) {
+        post.dataValues.createdAt = moment(post.createdAt).format("lll"); //format time stamp
+        post.dataValues.commentNum = userInfo.dataValues.Comments.length; //count the comments and likes
+        post.dataValues.likeNum = userInfo.dataValues.PostLikes.length;
+        return post;
       });
+      res.render("profile", {userInfo});
     } else res.redirect("/signup-login");
   });
 
-  // Route to render other user's profile view
+
+
+  // Route to render own profile view       // not polished yet
   app.get("/profile/:userName", async function (req, res) {
-    console.log(req.user);
     if (req.user) {
-      let fullName = `${user.first_name} ${user.last_name}`;
-      let user = await db.User.findOne({
+      // let fullName = `${req.user.first_name} ${req.user.last_name}`;
+      let userInfo = await db.User.findOne({
         where: {
-          id: req.user.id,
+          username: req.params.userName,
         },
         include: [
           {
-            model: db.PostLike,
-            group: ["PostId"],
-            attributes: [[Sequelize.fn("COUNT", "id"), "count_post_likes"]],
+            model: db.Post,
           },
           {
             model: db.Comment,
-            group: ["PostId"],
-            attributes: [[Sequelize.fn("COUNT", "id"), "count_comments"]],
+          },
+          {
+            model: db.PostLike,
           },
         ],
         order: [["updatedAt", "DESC"]],
+    
       });
-      res.render("profile", {
-        fullName: fullName,
-        user: user,
+         // validate if viewing own profile or others
+      if(userInfo.dataValues.id==req.user.id){
+        userInfo.dataValues.isProfileOwner = true;
+      }
+      userInfo.Posts = userInfo.Posts.map(function (post) {
+        post.dataValues.createdAt = moment(post.createdAt).format("lll"); //format time stamp
+        post.dataValues.commentNum = userInfo.dataValues.Comments.length; //count the comments and likes
+        post.dataValues.likeNum = userInfo.dataValues.PostLikes.length;
+        return post;
       });
+      res.render("profile", {userInfo});
     } else res.redirect("/signup-login");
   });
+
+
 };
