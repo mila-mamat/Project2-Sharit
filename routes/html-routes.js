@@ -1,97 +1,152 @@
-// Requiring path to so we can use relative routes to our HTML files
-var path = require("path");
-//format the data displayed on posts
+// Import depenencies
+var path = require('path');
 var moment = require('moment');
-
 const db = require("../models");
-
-// Requiring our custom middleware for checking if a user is logged in
 var isAuthenticated = require("../config/middleware/isAuthenticated");
+const passport = require('../config/passport');
+const Sequelize = require('sequelize');
 
 module.exports = function (app) {
-
+  // Route to sign user up
   app.get("/signup-login", function (req, res) {
-    // If the user already has an account send them to the home page
     if (req.user) {
-      // res.sendFile(path.join(__dirname, "../public/home.html"));              // delete later
-      res.render('home')
-    } 
-    // else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
-    else res.render('signup-login',{})
+      res.render('home');
+    } else res.render('signup-login',{}); /* Is {} required? */
   });
 
-  // Here we've add our isAuthenticated middleware to this route.
-  // If a user who is not logged in tries to access this route they will be redirected to the signup page
+  // Route to log user in
+  app.post("/login", passport.authenticate("local"), async (req, res) => {
+    res.json(req.user);
+  });
 
+  // Route to log user out
+  app.get("/logout", async (req, res) => {
+    req.logout();
+    res.redirect("/");
+  });
 
+  // Route to render home view
   app.get("/", isAuthenticated, async function (req, res) { 
     if (req.user) {
       let posts = await db.Post.findAll({
-        include :{model: db.User},
+        include: [
+          {
+            model: db.User
+          },
+          {
+            model: db.PostLike,
+            group: ['PostId'],
+            attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
+          },
+          {
+            model: db.Comment,
+            group: ['PostId'],
+            attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comments']]
+          }
+        ], 
         order: [['updatedAt', 'DESC']]
-      })
+      });
       posts=posts.map(function(post){
         post.dataValues.createdAt=moment(post.createdAt).format('lll');
-        return post
+        return post;
       })
-
-      res.render('home',{posts:posts})
-    } 
-    else res.redirect("/signup-login");
+      res.render('home',{posts:posts});
+    } else res.redirect("/signup-login");
   });
 
-
-  // TODO: display single post and comments
-  app.get("/post/:postId", function (req, res) {
-
-  });
-
-  // TODO: display profile page
-  // Must use handlebars
-  app.get("/profile", async function (req, res) {
-
+  // Route to render post view
+  app.get("/post/:postId", async function (req, res) {
     if (req.user) {
-      let userName = `${req.user.first_name} ${req.user.last_name}`
-      let currentUserPosts = await db.Post.findAll({
-        where : {UserId: req.user.id},
-        include : {model: db.User},
-      })
-       
-      res.render('profile', {
-        posts: currentUserPosts,
-        userName : userName
-      })
-      
-    } 
-    else res.redirect("/signup-login");
-    
-
+      const post = await db.Post.findOne({
+        where: {
+          PostId: req.params.postId
+        },
+        include: [
+          {
+            model: db.User
+          },
+          {
+            model: db.PostLike,
+            group: ['PostId'],
+            attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
+          },
+          {
+            model: db.Comment,
+            include: [
+              {
+                model: db.User
+              },
+              {
+                model: db.CommentLike,
+                group: ['CommentId'],
+                attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comment_likes']]
+              }
+            ], 
+            order: [['updatedAt', 'DESC']]
+          }
+        ]
+      });
+      res.render('post', {
+        post: post
+      });
+    } else res.redirect("/signup-login");
   });
 
-  app.get("/profile/:profileUserName", async function (req, res) {
-
-    if(req.user)
-    {// find the user info from the User table
-      let userInfo = await db.User.findOne({
-        where : {username: req.params.profileUserName}
-      })
-      // find user name and ID
-      let userName = `${userInfo.first_name} ${userInfo.last_name}`
-      // extract user information
-      let otherUserPosts = await db.Post.findAll({
-        where : {UserId: userInfo.id},
-        include : {model: db.User}
-      })
-      // render user's post etc
+  // Route to render own profile view
+  app.get("/profile", async function (req, res) {
+    if (req.user) {
+      let fullName = `${req.user.first_name} ${req.user.last_name}`;
+      let user = await db.User.findOne({
+        where: {
+          id: req.user.id
+        },
+        include: [
+          {
+            model: db.PostLike,
+            group: ['PostId'],
+            attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
+          },
+          {
+            model: db.Comment,
+            group: ['PostId'],
+            attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comments']]
+          }
+        ], 
+        order: [['updatedAt', 'DESC']]
+      });
       res.render('profile', {
-        posts: otherUserPosts,
-        userName : userName
-      })
-    }
-    // else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
-    else res.redirect("/signup-login");
-
-
+        fullName: fullName,
+        user: user
+      });
+    } else res.redirect("/signup-login");
   });
 
+  // Route to render other user's profile view
+  app.get("/profile/:userName", async function (req, res) {
+    if (req.user) {
+      let fullName = `${user.first_name} ${user.last_name}`
+      let user = await db.User.findOne({
+        where: {
+          id: req.user.id
+        },
+        include: [
+          {
+            model: db.PostLike,
+            group: ['PostId'],
+            attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
+          },
+          {
+            model: db.Comment,
+            group: ['PostId'],
+            attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comments']]
+          }
+        ], 
+        order: [['updatedAt', 'DESC']]
+      });
+      res.render('profile', {
+        fullName: fullName,
+        user: user
+      })
+    } else res.redirect("/signup-login");
+  });
 };
