@@ -224,8 +224,6 @@ module.exports = app => {
   app.post("/api/users", async (req, res) => {
     try {
       const user = await db.User.create(req.body);
-      user.profile_photo = '/avatars/profile-placeholder.png';
-      user.save() /* Is .save() required? */
       res.status(200).json({ data: user });
     } catch (err) {
       console.log(`POST /api/users failed \n`, err)
@@ -335,15 +333,13 @@ module.exports = app => {
    */
 
   // Route to update user
-  // Route to edit user info on profile page
-  app.patch("/api/users/profile", async (req, res) => {
-    /* Test */
-    console.log(req.body);
+ //rpoute to update avatar
+  app.post("/api/users/avatar", async (req, res) => {     //edit profile avatar
     let userID = req.user.id
+
     try {
       let user = await db.User.findByPk(userID);
       if (!user) return res.status(404).json({ errors: [{ title: 'Not found' }] });
-      user = await db.User.update(req.body);
 
       if (req.files) {
         const profile_photo = req.files.profile_photo
@@ -354,13 +350,39 @@ module.exports = app => {
         await profile_photo.mv(path.join(__dirname, '..', 'public', 'avatars', fileName))
         // Record the public URL on the User model and store it in the database.
         user.profile_photo = `/avatars/${fileName}`;
-        user.save()
+        user.save();
+        res.status(200).redirect("/profile");
       }
+     } catch (err) {
+      console.log(`Post /api/users/${req.params.userId} failed \n`, err)    //??
+      res.status(500).json({ errors: [err] }) 
+    }
+  });
+
+
+   // Route to edit user info on profile page                  // edit profile except avatar
+  app.patch("/api/users/profile", async (req, res) => {
+    /* Test */
+    console.log("-------------------------------------")
+    let userID = req.user.id
+    console.log(userID)
+    try {
+      let user = await db.User.findByPk(userID);
+      if (!user) return res.status(404).json({ errors: [{ title: 'Not found' }] });
+      user = await db.User.update(req.body);
+      
      } catch (err) {
       console.log(`PATCH /api/users/${req.params.userId} failed \n`, err)
       res.status(500).json({ errors: [err] }) 
     }
   });
+
+
+
+
+
+
+
 
   // Route to edit post
   app.patch("/api/posts/:postId", async (req, res) => {
