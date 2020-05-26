@@ -9,10 +9,10 @@ module.exports = app => {
    */
 
   // Route to display current user
-  app.get('/api/user', async (req, res) => {
+  app.get('/api/user', async(req, res) => {   //is async required?
     try {
       const user = req.user;
-      res.status(200).json({ data: user });
+      res.status(200).json({ data: user });   //what does this do?
     } catch (err) {
       console.log(`GET /api/user failed \n`, err);
       res.status(500).json({ errors: [err] });
