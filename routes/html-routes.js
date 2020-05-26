@@ -51,6 +51,7 @@ module.exports = function (app) {
         post.dataValues.likeNum = post.PostLikes.length;
         return post;
       });
+      posts.user = {userId:req.user.id, username:req.user.username}
       res.render("home", { posts: posts });
     } else res.redirect("/signup-login");
   });
@@ -94,40 +95,6 @@ module.exports = function (app) {
       });
     } else res.redirect("/signup-login");
   });
-
-  // Route to render own profile view
-  app.get("/profile", async function (req, res) {
-    if (req.user) {
-   
-      let userInfo = await db.User.findOne({
-        where: {
-          id: req.user.id,
-        },
-        include: [
-          {
-            model: db.Post,
-          },
-          {
-            model: db.Comment,
-          },
-          {
-            model: db.PostLike,
-          },
-        ],
-        order: [["updatedAt", "DESC"]],
-    
-      });
-        userInfo.dataValues.isProfileOwner = true;
-        userInfo.Posts = userInfo.Posts.map(function (post) {
-        post.dataValues.createdAt = moment(post.createdAt).format("lll"); //format time stamp
-        post.dataValues.commentNum = userInfo.dataValues.Comments.length; //count the comments and likes
-        post.dataValues.likeNum = userInfo.dataValues.PostLikes.length;
-        return post;
-      });
-      res.render("profile", {userInfo});
-    } else res.redirect("/signup-login");
-  });
-
 
 
   // Route to render own profile view       // not polished yet
