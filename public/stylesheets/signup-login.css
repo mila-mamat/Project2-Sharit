@@ -1,0 +1,58 @@
+
+/* general  */
+* { box-sizing: border-box; }
+
+html { overflow-y: scroll; }
+
+
+
+.is-active {
+  color:#fa7000 !important
+}
+
+
+#bg {
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  width:100vw;
+  height:100vh;
+  z-index:-1
+}
+
+.a {
+border:red 1px solid;
+}
+
+.m-5em{
+    margin: 5em;
+}
+
+.mb-2em{
+    margin-bottom: 2em;
+}
+
+.signup-content{
+    margin: 2em; 
+    padding: 3em;
+}
+
+.login-content{
+    margin: 2em; 
+    padding: 3em; 
+    display: inline-table;
+}
+
+/* navbar  */
+.navbar-brand, .slogan  {
+    font-family:'Pattaya', sans-serif;
+  }
+  
+  
+  .navbar-brand a span {
+    color:#fa7000
+  }
+  
+  

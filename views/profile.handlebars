@@ -29,10 +29,9 @@
   </div>
 </nav>
 
-{{!-- TODO : move style to css file --}}
-<div class="columns is-mobile" style="margin-top: 3em;">
+<div class="columns is-mobile mt-3em">
   <div class="column is-half is-offset-one-quarter has-text-centered">
-    <div class="columns is-mobile is-centered" style = "margin-bottom: 1em;">
+    <div class="columns is-mobile is-centered mt-1em">
       <figure class="image is-64x64">
           <img class="is-rounded" src="https://pbs.twimg.com/profile_images/663874141854961666/HXz-_UA4_normal.jpg" />
       </figure>
@@ -43,7 +42,7 @@
 
 
   {{!-- display posts for current user  --}}
-  <div class="grid">
+  <div class="grid m-2em">
     {{!-- grid-sizer required for the masonry working --}}
     <div class="grid-sizer"></div>
 
@@ -84,3 +83,5 @@
     {{/each}}
 
   </div> 
+
+  <link rel="stylesheet" href="./stylesheets/profile.css" />
