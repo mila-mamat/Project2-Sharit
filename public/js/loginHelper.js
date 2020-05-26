@@ -44,7 +44,7 @@ document.getElementById('signupBtn').onclick = () =>{
 }
 
 function loginUser(userDataObj) {
-$.post("/api/login", userDataObj)
+$.post("/login", userDataObj)
     .done(function() {
     window.location.replace("/");
     })
