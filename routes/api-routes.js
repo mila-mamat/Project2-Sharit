@@ -1,6 +1,5 @@
 // Import dependencies
 const db = require('../models');
-const passport = require('../config/passport');
 const path = require('path');
 
 module.exports = app => {
@@ -220,14 +219,10 @@ module.exports = app => {
       const post = await db.Post.create(req.body);
       if (req.files) {
         const post_photo = req.files.post_photo
-        // Prepend the fileName with the User.id to prevent naming collisions
-        // with other users uploading files with the same name.
         const fileName = `${post_photo.name}`
-        // Move the file from the tmp location to the public folder.
         await post_photo.mv(path.join(__dirname, '..', 'public', 'postphoto', fileName))
-        // Record the public URL on the User model and store it in the database.
         post.post_photo = `/postphoto/${fileName}`;
-        post.save()
+        post.save() // Is this required?
       }
       res.status(200).redirect("/");
     } catch (err) {
@@ -260,8 +255,8 @@ module.exports = app => {
     }
   });
 
-    // Route to create comment like
-    app.post("/api/comment-likes", async (req, res) => {
+  // Route to create comment like
+  app.post("/api/comment-likes", async (req, res) => {
     try {
       const commentLike = await db.CommentLike.create(req.body);
       res.status(200).json({ data: commentLike });
@@ -299,21 +294,20 @@ module.exports = app => {
     }
   });
 
-    // Route to delete comment like
-    app.delete("/api/comment-likes/:commentLikeId", async (req, res) => {
-      /* Test */
-      console.log(req.body);
-      
-      try {
-        let commentLike = await db.CommentLike.findByPk(req.params.commentLikeId);
-        commentLike = await commentLike.destroy();
-        res.status(200).json({ data: commentLike });
-      } catch (err) {
-        console.log(`DELETE /api/post-likes/${req.params.commentLikeId} failed \n`, err)
-        res.status(500).json({ errors: [err] }) 
-      }
-    });
-  };
+  // Route to delete comment like
+  app.delete("/api/comment-likes/:commentLikeId", async (req, res) => {
+    /* Test */
+    console.log(req.body);
+    
+    try {
+      let commentLike = await db.CommentLike.findByPk(req.params.commentLikeId);
+      commentLike = await commentLike.destroy();
+      res.status(200).json({ data: commentLike });
+    } catch (err) {
+      console.log(`DELETE /api/post-likes/${req.params.commentLikeId} failed \n`, err)
+      res.status(500).json({ errors: [err] }) 
+    }
+  });
 
   /*
    *  PATCH routes
@@ -344,3 +338,4 @@ module.exports = app => {
       res.status(500).json({ errors: [err] }) 
     }
   });
+};

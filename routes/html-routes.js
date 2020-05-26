@@ -3,6 +3,7 @@ var path = require('path');
 var moment = require('moment');
 const db = require("../models");
 var isAuthenticated = require("../config/middleware/isAuthenticated");
+const passport = require('../config/passport');
 
 module.exports = function (app) {
   // Route to authenticate passport and send user to home page
@@ -75,7 +76,6 @@ module.exports = function (app) {
   });
 
   app.get("/profile/:profileUserName", async function (req, res) {
-
     if(req.user)
     {// find the user info from the User table
       let userInfo = await db.User.findOne({
