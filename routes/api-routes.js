@@ -225,7 +225,7 @@ module.exports = app => {
     try {
       const user = await db.User.create(req.body);
       user.profile_photo = '/avatars/profile-placeholder.png';
-      user.save() // Is this required?
+      user.save() /* Is .save() required? */
       res.status(200).json({ data: user });
     } catch (err) {
       console.log(`POST /api/users failed \n`, err)
@@ -243,7 +243,7 @@ module.exports = app => {
         const fileName = `${post_photo.name}`
         await post_photo.mv(path.join(__dirname, '..', 'public', 'postphoto', fileName))
         post.post_photo = `/postphoto/${fileName}`;
-        post.save() // Is this required?
+        post.save() /* Is .save() required? */
       }
       res.status(200).redirect("/");
     } catch (err) {

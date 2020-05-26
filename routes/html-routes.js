@@ -6,7 +6,14 @@ var isAuthenticated = require("../config/middleware/isAuthenticated");
 const passport = require('../config/passport');
 
 module.exports = function (app) {
-  // Route to authenticate passport and send user to home page
+  // Route to sign user up
+  app.get("/signup-login", function (req, res) {
+    if (req.user) {
+      res.render('home');
+    } else res.render('signup-login',{}); /* Is {} required? */
+  });
+
+  // Route to log user in
   app.post("/login", passport.authenticate("local"), async (req, res) => {
     res.json(req.user);
   });
@@ -17,87 +24,133 @@ module.exports = function (app) {
     res.redirect("/");
   });
 
-  app.get("/signup-login", function (req, res) {
-    // If the user already has an account send them to the home page
-    if (req.user) {
-      // res.sendFile(path.join(__dirname, "../public/home.html"));              // delete later
-      res.render('home')
-    } 
-    // else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
-    else res.render('signup-login',{})
-  });
-
-  // Here we've add our isAuthenticated middleware to this route.
-  // If a user who is not logged in tries to access this route they will be redirected to the signup page
-
-
+  // Route to render home view
   app.get("/", isAuthenticated, async function (req, res) { 
     if (req.user) {
       let posts = await db.Post.findAll({
-        include :{model: db.User},
+        include: {
+          model: db.User
+        },
         order: [['updatedAt', 'DESC']]
-      })
+      });
       posts=posts.map(function(post){
         post.dataValues.createdAt=moment(post.createdAt).format('lll');
-        return post
+        return post;
       })
-
-      res.render('home',{posts:posts})
-    } 
-    else res.redirect("/signup-login");
+      res.render('home',{posts:posts});
+    } else res.redirect("/signup-login");
   });
 
-
-  // TODO: display single post and comments
+  // TODO: Route to render post view
   app.get("/post/:postId", function (req, res) {
-
-  });
-
-  // TODO: display profile page
-  // Must use handlebars
-  app.get("/profile", async function (req, res) {
-
     if (req.user) {
-      let userName = `${req.user.first_name} ${req.user.last_name}`
-      let currentUserPosts = await db.Post.findAll({
-        where : {UserId: req.user.id},
-        include : {model: db.User},
-      })
-       
-      res.render('profile', {
-        posts: currentUserPosts,
-        userName : userName
-      })
-      
-    } 
-    else res.redirect("/signup-login");
-    
-
+      const post = await db.Post.findOne({
+        where: {
+          PostId: req.params.postId
+        },
+        include: [
+          {
+            model: db.User
+          },
+          {
+            model: db.PostLike,
+            group: ['post_id'],
+            attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
+          },
+          {
+            model: db.Comment,
+            include: [
+              {
+                model: db.User
+              },
+              {
+                model: db.CommentLike,
+                group: ['comment_id'],
+                attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comment_likes']]
+              }
+            ]
+          }
+        ]
+      });
+      res.render('post', {
+        post: post
+      });
+    } else res.redirect("/signup-login");
   });
 
-  app.get("/profile/:profileUserName", async function (req, res) {
-    if(req.user)
-    {// find the user info from the User table
-      let userInfo = await db.User.findOne({
-        where : {username: req.params.profileUserName}
-      })
-      // find user name and ID
-      let userName = `${userInfo.first_name} ${userInfo.last_name}`
-      // extract user information
-      let otherUserPosts = await db.Post.findAll({
-        where : {UserId: userInfo.id},
-        include : {model: db.User}
-      })
-      // render user's post etc
+  // Route to render own profile view
+  app.get("/profile", async function (req, res) {
+    if (req.user) {
+      let fullName = `${req.user.first_name} ${req.user.last_name}`;
+      let user = await db.User.findOne({
+        where: {
+          UserId: req.user.id
+        },
+        include: [
+          {
+            model: db.Post,
+            include: [
+              {
+                model: db.Comment,
+                include: [
+                  {
+                    model: db.CommentLike,
+                    group: ['comment_id'],
+                    attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comment_likes']]
+                  }
+                ]
+              },
+              {
+                model: db.PostLike,
+                group: ['post_id'],
+                attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
+              }
+            ]
+          }
+        ]
+      });
       res.render('profile', {
-        posts: otherUserPosts,
-        userName : userName
-      })
-    }
-    // else res.sendFile(path.join(__dirname, "../public/signup-login.html"));
-    else res.redirect("/signup-login");
-
-
+        fullName: fullName,
+        user: user
+      });
+    } else res.redirect("/signup-login");
   });
 
+  // Route to render other user's profile view
+  app.get("/profile/:userName", async function (req, res) {
+    if (req.user) {
+      let fullName = `${user.first_name} ${user.last_name}`
+      let user = await db.User.findOne({
+        where: {
+          username: req.params.userName
+        },
+        include: [
+          {
+            model: db.Post,
+            include: [
+              {
+                model: db.Comment,
+                include: [
+                  {
+                    model: db.CommentLike,
+                    group: ['comment_id'],
+                    attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comment_likes']]
+                  }
+                ]
+              },
+              {
+                model: db.PostLike,
+                group: ['post_id'],
+                attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
+              }
+            ]
+          }
+        ]
+      });
+      res.render('profile', {
+        fullName: fullName,
+        user: user
+      })
+    } else res.redirect("/signup-login");
+  });
 };
