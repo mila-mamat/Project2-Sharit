@@ -29,9 +29,21 @@ module.exports = function (app) {
   app.get("/", isAuthenticated, async function (req, res) { 
     if (req.user) {
       let posts = await db.Post.findAll({
-        include: {
-          model: db.User
-        },
+        include: [
+          {
+            model: db.User
+          },
+          {
+            model: db.PostLike,
+            group: ['PostId'],
+            attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
+          },
+          {
+            model: db.Comment,
+            group: ['PostId'],
+            attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comments']]
+          }
+        ], 
         order: [['updatedAt', 'DESC']]
       });
       posts=posts.map(function(post){
@@ -55,7 +67,7 @@ module.exports = function (app) {
           },
           {
             model: db.PostLike,
-            group: ['post_id'],
+            group: ['PostId'],
             attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
           },
           {
@@ -66,7 +78,7 @@ module.exports = function (app) {
               },
               {
                 model: db.CommentLike,
-                group: ['comment_id'],
+                group: ['CommentId'],
                 attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comment_likes']]
               }
             ]
@@ -96,14 +108,14 @@ module.exports = function (app) {
                 include: [
                   {
                     model: db.CommentLike,
-                    group: ['comment_id'],
+                    group: ['CommentId'],
                     attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comment_likes']]
                   }
                 ]
               },
               {
                 model: db.PostLike,
-                group: ['post_id'],
+                group: ['PostId'],
                 attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
               }
             ]
