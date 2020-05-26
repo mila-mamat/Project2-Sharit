@@ -32,13 +32,23 @@
 <div class="columns is-mobile mt-3em">
   <div class="column is-half is-offset-one-quarter has-text-centered">
     <div class="columns is-mobile is-centered mt-1em">
-      <figure class="image is-64x64">
-          <img class="is-rounded" src="https://pbs.twimg.com/profile_images/663874141854961666/HXz-_UA4_normal.jpg" />
-      </figure>
+      <div class="profile-container">
+        <figure class="image is-profile is-128x128">
+            <img class="is-rounded" src="https://pbs.twimg.com/profile_images/663874141854961666/HXz-_UA4_normal.jpg" />
+            {{!-- <button class="middle change-profile-btn">Edit</button> nchange="this.form.submit()" --}}
+            <form id="post-from" action="/api/users/profile" method="patch" enctype="multipart/form-data">
+              <div>
+                <label for="post_photo" class="middle change-profile-btn is-clickable">Edit</label>
+                <input id="post_photo"  style="display:none" type="file" name="profile_photo">
+              </div>
+            </form>
+        </figure>
+      </div>
     </div>
     {{userName}}
   </div>
 </div>
+
 
 
   {{!-- display posts for current user  --}}
