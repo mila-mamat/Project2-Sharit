@@ -1,6 +1,7 @@
 // Import dependencies
 const db = require('../models');
 const path = require('path');
+const Sequelize = require('sequelize');
 
 module.exports = app => {
   /*
@@ -35,47 +36,52 @@ module.exports = app => {
       const user = await db.User.findAll({
         where: {
           id: req.params.userId
-        },
-        attributes: [
-          'first_name',
-          'last_name',
-          'profile_photo',
-          'birthdate',
-          'sex',
-          'city',
-          'province_state',
-          'country'
-        ],
-        include: [
-          {
-            model: db.Post,
-            attributes: [
-              'id',
-              'post_photo',
-              'text',
-              'datetime_modified'
-            ],
-            include: [
-              {
-                model: db.Comment,
-                attributes: [],
-                include: [
-                  {
-                    model: db.CommentLike,
-                    group: ['comment_id'],
-                    attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comment_likes']]
-                  }
-                ]
-              },
-              {
-                model: db.PostLike,
-                group: ['post_id'],
-                attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
-              }
-            ]
-          }
-        ]
+        }
       });
+      // const user = await db.User.findAll({
+      //   where: {
+      //     id: req.params.userId
+      //   },
+      //   attributes: [
+      //     'first_name',
+      //     'last_name',
+      //     'profile_photo',
+      //     'birthdate',
+      //     'sex',
+      //     'city',
+      //     'province_state',
+      //     'country'
+      //   ],
+      //   include: [
+      //     {
+      //       model: db.Post,
+      //       attributes: [
+      //         'id',
+      //         'post_photo',
+      //         'text',
+      //         'datetime_modified'
+      //       ],
+      //       include: [
+      //         {
+      //           model: db.Comment,
+      //           attributes: [],
+      //           include: [
+      //             {
+      //               model: db.CommentLike,
+      //               group: ['comment_id'],
+      //               attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comment_likes']]
+      //             }
+      //           ]
+      //         },
+      //         {
+      //           model: db.PostLike,
+      //           group: ['post_id'],
+      //           attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
+      //         }
+      //       ]
+      //     }
+      //   ]
+      // });
       res.status(200).json({ data: user });
     } catch (err) {
       console.log(`GET /api/users/${req.params.userId} failed \n`, err)
@@ -97,53 +103,68 @@ module.exports = app => {
   // Route to display specific post
   app.get("/api/posts/:postId", async (req, res) => {
     try {
-      let post = await db.Post.findAll({
+      const post = await db.Post.findAll({
         where: {
           id: req.params.postId
         },
-        attributes: [
-          'post_photo',
-          'text',
-          'datetime_modified'
-        ],
         include: [
           {
             model: db.Comment,
-            attributes: [
-              'id',
-              'text',
-              'datetime_modified'
-            ],
             include: [
               {
-                model: db.CommentLike,
-                group: ['comment_id'],
-                attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comment_likes']]
-              },
-              {
-                model: db.User,
-                attributes: [
-                  'first_name',
-                  'last_name'
-                ]
+                model: db.User
               }
-            ]
-          },
-          {
-            model: db.PostLike,
-            group: ['post_id'],
-            attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
-          },
-          {
-            model: db.User,
-            attributes: [
-              'first_name',
-              'last_name',
-              'profile_photo'
             ]
           }
         ]
       });
+      // let post = await db.Post.findAll({
+      //   where: {
+      //     id: req.params.postId
+      //   },
+      //   attributes: [
+      //     'post_photo',
+      //     'text',
+      //     'datetime_modified'
+      //   ],
+      //   include: [
+      //     {
+      //       model: db.Comment,
+      //       attributes: [
+      //         'id',
+      //         'text',
+      //         'datetime_modified'
+      //       ],
+      //       include: [
+      //         {
+      //           model: db.CommentLike,
+      //           group: ['comment_id'],
+      //           attributes: [[Sequelize.fn('COUNT', 'id'), 'count_comment_likes']]
+      //         },
+      //         {
+      //           model: db.User,
+      //           attributes: [
+      //             'first_name',
+      //             'last_name'
+      //           ]
+      //         }
+      //       ]
+      //     },
+      //     {
+      //       model: db.PostLike,
+      //       group: ['post_id'],
+      //       attributes: [[Sequelize.fn('COUNT', 'id'), 'count_post_likes']]
+      //     },
+      //     {
+      //       model: db.User,
+      //       attributes: [
+      //         'first_name',
+      //         'last_name',
+      //         'profile_photo'
+      //       ]
+      //     }
+      //   ]
+      // });
       res.status(200).json({ data: post });
     } catch (err) {
       console.log(`GET /api/posts/${req.params.postId} failed \n`, err)
