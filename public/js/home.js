@@ -35,3 +35,21 @@ $grid.imagesLoaded().progress(function () {
   $grid.masonry();
 });
 
+
+
+$(".author-name").on('click', function(event){
+  let userName = event.target.innerText
+  if(userName)
+  {
+    window.location.replace(`/profile/${userName}`);
+  }
+  // $.post("/api/users", userDataObj)
+  // .done(function() {
+  //   window.alert('Signup succeeded, ready to login!')
+  // })
+  // .fail(function() {
+  //   alert( "Fail to create a new user" );
+  // })
+
+});
+
