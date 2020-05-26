@@ -1,0 +1,178 @@
+
+/* general  */
+* { box-sizing: border-box; }
+
+html { overflow-y: scroll; }
+
+
+
+.is-active {
+  color:#fa7000 !important
+}
+
+
+#bg {
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  width:100vw;
+  height:100vh;
+  z-index:-1
+}
+
+.a {
+border:red 1px solid
+}
+
+.mt-3em {
+    margin-top: 3em;
+}
+
+.mt-1em {
+    margin-bottom: 1em !important;
+}
+
+.m-2em {
+    margin: 2em;
+}
+
+
+/* navbar  */
+.navbar-brand, .slogan  {
+    font-family:'Pattaya', sans-serif;
+  }
+  
+  
+  .navbar-brand a span {
+    color:#fa7000
+  }
+  
+  
+  
+  
+
+
+/* start of posts masonry  */
+
+
+#main-content {
+    width:80%;
+    margin:10px auto;
+  }
+  
+  
+  
+  #main-content .notification{
+    margin:10px;
+    padding:20px;
+    background-color: white;
+  }
+  
+  
+  
+  
+  #main-content form .buttons {
+  display:flex;
+  justify-content: flex-start;
+  
+  }
+  
+  #main-content form textarea{
+    font-size: 16px !important;
+  }
+  #main-content form .buttons > *{
+  margin:5px 10px;
+  }
+  
+  #main-content form img{
+   height:auto;
+  width:100px;
+  }
+  
+  /* clear fix */
+  .grid:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+  
+  /* ---- .grid-item ---- */
+  .grid-sizer,
+  .grid-item {
+    width: 33.33%;
+  }
+  
+  .grid-item {
+    float: left;
+    padding:10px;
+  }
+  
+  .grid-item img {
+    display: block;
+    max-width: 100%;
+  }
+  
+  @media screen and (max-width:1023px) {
+  
+    .grid-sizer,
+  .grid-item {
+    width: 50%;
+  }
+  }
+  @media screen and (max-width:768px) {
+  
+    #main-content {
+      width:100%;
+      margin:10px auto;
+    }
+  }
+  
+  
+  @media screen and (max-width:576px) {
+  
+    .grid-sizer,
+  .grid-item {
+    width: 100%;
+  }
+  }
+  
+  
+  
+  /* card style for each post  */
+  
+  .card .card-header-title {
+    flex-grow:0 !important;
+  }
+  
+  .card .avatar {
+    margin-right:10px;
+  }
+  
+  .card .card-header{
+    align-items: center;
+    font-weight: bold;
+    color:black;
+    justify-content: space-between;
+  }
+  
+  .card .card-header .post-date{
+    font-size: small;
+    font-weight: lighter;
+    color:grey;
+    float:right;
+    padding:12px 16px;
+  }
+  
+  
+  .card .card-content img {
+    width:100%;
+    height:auto;
+    margin-top:10px
+  }
+  
+  
+  
+  /* end of posts masonry  */
+  
