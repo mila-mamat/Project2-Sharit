@@ -9,10 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     username: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
-      validate: {
-        len: [6, 30],
-      }
+      unique: true
     },
     password: {
       type: DataTypes.STRING,
@@ -21,10 +18,6 @@ module.exports = (sequelize, DataTypes) => {
     first_name: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        len: [2, 60],
-        isAlpha: true
-      },
       set (val) {
         this.setDataValue('first_name', to.title(val));
       }
@@ -32,10 +25,6 @@ module.exports = (sequelize, DataTypes) => {
     last_name: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        len: [2, 60],
-        isAlpha: true
-      },
       set (val) {
         this.setDataValue('last_name', to.title(val));
       }
@@ -45,40 +34,25 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: '/avatars/profile-placeholder.png',
     },
     birthdate: {
-      type: DataTypes.DATE(6),
-      validate: {
-        isDate: true
-      }
+      type: DataTypes.DATE(6)
     },
     sex: {
       type: DataTypes.ENUM('Male', 'Female')
     },
     city: {
       type: DataTypes.STRING,
-      validate: {
-        len: [2, 60],
-        isAlpha: true
-      },
       set (val) {
         this.setDataValue('city', to.title(val));
       }
     },
     province_state: {
       type: DataTypes.STRING,
-      validate: {
-        len: [2, 60],
-        isAlpha: true
-      },
       set (val) {
         this.setDataValue('province_state', to.title(val));
       }
     },
     country: {
       type: DataTypes.STRING,
-      validate: {
-        len: [2, 60],
-        isAlpha: true
-      },
       set (val) {
         this.setDataValue('country', to.title(val));
       }
