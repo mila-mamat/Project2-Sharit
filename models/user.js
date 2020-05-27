@@ -34,10 +34,10 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: '/avatars/profile-placeholder.png',
     },
     birthdate: {
-      type: DataTypes.DATE(6)
+      type: DataTypes.STRING,
     },
     sex: {
-      type: DataTypes.ENUM('Male', 'Female')
+      type: DataTypes.STRING,
     },
     city: {
       type: DataTypes.STRING,

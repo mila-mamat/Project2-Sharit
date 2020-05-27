@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "password",
-    "database": "database_development",
+    "password": "Gjq.19901011",
+    "database": "sharit_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
