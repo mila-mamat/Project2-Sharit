@@ -51,7 +51,7 @@ module.exports = function (app) {
         post.dataValues.likeNum = post.PostLikes.length;
         return post;
       });
-      posts.user = {userId:req.user.id, username:req.user.username}
+      posts.currentUser = req.user.username
       res.render("home", { posts: posts });
     } else res.redirect("/signup-login");
   });
@@ -61,35 +61,24 @@ module.exports = function (app) {
     if (req.user) {
       const post = await db.Post.findOne({
         where: {
-          PostId: req.params.postId,
+          id: req.params.postId,
         },
         include: [
           {
             model: db.User,
           },
           {
-            model: db.PostLike,
-            group: ["PostId"],
-            attributes: [[Sequelize.fn("COUNT", "id"), "count_post_likes"]],
+            model: db.Comment,
           },
           {
-            model: db.Comment,
-            include: [
-              {
-                model: db.User,
-              },
-              {
-                model: db.CommentLike,
-                group: ["CommentId"],
-                attributes: [
-                  [Sequelize.fn("COUNT", "id"), "count_comment_likes"],
-                ],
-              },
-            ],
-            order: [["updatedAt", "DESC"]],
+            model: db.PostLike,
           },
         ],
+        order: [["updatedAt", "DESC"]],
       });
+      post.currentUser = req.user.username
+      console.log("post in post page---------------",post)
+
       res.render("post", {
         post: post,
       });
