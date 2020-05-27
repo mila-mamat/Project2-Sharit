@@ -30,163 +30,202 @@
 </nav>
 
 
-<div class="columns mt-3em">
+<div class="columns mt-3em mx-5em">
   <div class="column">
     <div class="columns is-mobile ">
-      <div class="column is-half is-offset-one-quarter has-text-centered">
+      <div class="column has-text-centered">
         <div class="columns is-mobile is-centered mt-1em">
           <div class="profile-container">
-            <figure class="image is-profile is-128x128">
-              <img class="is-rounded" src="{{userInfo.dataValues.profile_photo}}" alt="profile photo">
-          
+            <figure class="image is-profile">
+              <img class="is-rounded" src="{{userInfo.dataValues.profile_photo}}" alt="profile photo" id="avatar">
 
-              {{!-- working on this  --}}
-              <form id="avatar-form"  class="edit-option" action="/api/users/avatar" method="post" enctype="multipart/form-data">
+
+              {{#if userInfo.dataValues.isProfileOwner}}
+              <form id="avatar-form" action="/api/users/avatar" method="post" enctype="multipart/form-data">
                 <div>
                   <label for="profile_photo" class="middle change-profile-btn is-clickable">Edit</label>
                   <input id="profile_photo" style="display:none" type="file" name="profile_photo">
                 </div>
               </form>
-       
+              {{/if}}
+
             </figure>
           </div>
         </div>
 
+        <form id="profile-form" action="/api/users/profile" method="post">
+          <div class="columns">
+            <div class="column ml-5em">
+              <div class="field is-horizontal mt-3em">
+                <div class="field-label is-normal ">
+                  <label class="label">Username</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      {{#if userInfo.dataValues.isProfileOwner}}
+                      <input id='usernameInfo' class="input is-small" type="text"
+                        name="username"
+                        value="{{userInfo.dataValues.username}}">
+                      {{else}}
+                      <label>{{userInfo.dataValues.username}}</label>
+                      {{/if}}
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-        <div class="field is-horizontal mt-3em">
-          <div class="field-label is-normal ">
-            <label class="label">Username</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                {{#if userInfo.dataValues.isProfileOwner}}
-                <input id='usernameInfo' class="input is-small" type="text" placeholder="{{userInfo.dataValues.username}}">
-                {{else}}
-                <label>{{userInfo.dataValues.username}}</label>
-                {{/if}}
+              <div class="field is-horizontal">
+                <div class="field-label is-normal ">
+                  <label class="label">FirstName</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      {{#if userInfo.dataValues.isProfileOwner}}
+                      <input id='firstnameInfo' class="input is-small" type="text"
+                        name="first_name"
+                        value="{{userInfo.dataValues.first_name}}">
+                      {{else}}
+                      <label>{{userInfo.dataValues.first_name}}</label>
+                      {{/if}}
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="field is-horizontal">
-          <div class="field-label is-normal ">
-            <label class="label">FirstName</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                {{#if userInfo.dataValues.isProfileOwner}}
-                <input id='firstnameInfo' class="input is-small" type="text" placeholder="{{userInfo.dataValues.first_name}}">
-                {{else}}
-                <label>{{userInfo.dataValues.first_name}}</label>
-                {{/if}}
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">LastName</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      {{#if userInfo.dataValues.isProfileOwner}}
+                      <input id='lastnameInfo' class="input is-small" type="text"
+                         name="last_name"
+                        value="{{userInfo.dataValues.last_name}}">
+                      {{else}}
+                      <label>{{userInfo.dataValues.last_name}}</label>
+                      {{/if}}
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">LastName</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                {{#if userInfo.dataValues.isProfileOwner}}
-                <input id='lastnameInfo' class="input is-small" type="text" placeholder="{{userInfo.dataValues.last_name}}">
-                {{else}}
-                <label>{{userInfo.dataValues.last_name}}</label>
-                {{/if}}
+              <div class="field is-horizontal ">
+                <div class="field-label is-normal">
+                  <label class="label">BirthDate</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      {{#if userInfo.dataValues.isProfileOwner}}
+                      <input id='birthdateInfo' class="input is-small" type="text"
+                       name="birthdate" value="null"
+                        value="{{userInfo.dataValues.birthdate}}">
+                      {{else}}
+                      <label>{{userInfo.dataValues.birthdate}}</label>
+                      {{/if}}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <div class="field is-horizontal ">
-          <div class="field-label is-normal">
-            <label class="label">BirthDate</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                {{#if userInfo.dataValues.isProfileOwner}}
-                <input id='birthdateInfo' class="input is-small" type="date" placeholder="{{userInfo.dataValues.birthdate}}">
-                {{else}}
-                <label>{{userInfo.dataValues.birthdate}}</label>
-                {{/if}}
+            <div class="column mr-5em">
+              <div class="field is-horizontal mt-3em">
+                <div class="field-label is-normal">
+                  <label class="label">Gender</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      {{#if userInfo.dataValues.isProfileOwner}}
+                      <input id='sexInfo' class="input is-small" type="text" name="sex" value="{{userInfo.dataValues.sex}}">
+                      {{else}}
+                      <label>{{userInfo.dataValues.sex}}</label>
+                      {{/if}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="field is-horizontal ">
+                <div class="field-label is-normal">
+                  <label class="label">City</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      {{#if userInfo.dataValues.isProfileOwner}}
+                      <input id='cityInfo' class="input is-small" type="text" 
+                        name="city" value="{{userInfo.dataValues.city}}">
+                      {{else}}
+                      <label>{{userInfo.dataValues.city}}</label>
+                      {{/if}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="field is-horizontal ">
+                <div class="field-label is-normal">
+                  <label class="label">Province</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      {{#if userInfo.dataValues.isProfileOwner}}
+                      <input id='provinceInfo' class="input is-small" type="text"
+                         name="province_state"
+                        value="{{userInfo.dataValues.province_state}}">
+                      {{else}}
+                      <label>{{userInfo.dataValues.province_state}}</label>
+                      {{/if}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">Country</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      {{#if userInfo.dataValues.isProfileOwner}}
+                      <input id='countryInfo' class="input is-small" type="text"
+                        name="country"
+                        value="{{userInfo.dataValues.country}}">
+                      {{else}}
+                      <label>{{userInfo.dataValues.country}}</label>
+                      {{/if}}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+
           </div>
-        </div>
-        <div class="field is-horizontal ">
-          <div class="field-label is-normal">
-            <label class="label">Gender</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                {{#if userInfo.dataValues.isProfileOwner}}
-                <input id='sexInfo' class="input is-small" type="text" placeholder="{{userInfo.dataValues.sex}}">
-                {{else}}
-                <label>{{userInfo.dataValues.sex}}</label>
-                {{/if}}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="field is-horizontal ">
-          <div class="field-label is-normal">
-            <label class="label">City</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                {{#if userInfo.dataValues.isProfileOwner}}
-                <input id='cityInfo' class="input is-small" type="text" placeholder="{{userInfo.dataValues.city}}">
-                {{else}}
-                <label>{{userInfo.dataValues.city}}</label>
-                {{/if}}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="field is-horizontal ">
-          <div class="field-label is-normal">
-            <label class="label">Province</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                {{#if userInfo.dataValues.isProfileOwner}}
-                <input id='provinceInfo' class="input is-small" type="text" placeholder="{{userInfo.dataValues.province_state}}">
-                {{else}}
-                <label>{{userInfo.dataValues.province_state}}</label>
-                {{/if}}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Country</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                {{#if userInfo.dataValues.isProfileOwner}}
-                <input id='countryInfo' class="input is-small" type="text" placeholder="{{userInfo.dataValues.country}}">
-                {{else}}
-                <label>{{userInfo.dataValues.country}}</label>
-                {{/if}}
-              </div>
-            </div>
-          </div>
-        </div>
-        {{#if userInfo.dataValues.isProfileOwner}}
-          <button id="profileUpdateBtn"class="button is-black">Update</button>
-        {{/if}}
+
+          {{#if userInfo.dataValues.isProfileOwner}}
+
+          <button id="profileUpdateBtn" class="button is-black">Update <input type="submit" value="Submit"
+              style="display:none"></button>
+          {{/if}}
+
+        </form>
+
+
+
+
+
+
+
+
+
+
+
+
       </div>
     </div>
   </div>
@@ -231,13 +270,14 @@
         </div>
         <footer class="card-footer">
           <a href="" class="card-footer-item"><i class="far fa-heart"> {{dataValues.likeNum}}</i></a>
-          <a href="post/{{dataValues.id}}" class="card-footer-item"><i class="far fa-comment"> {{dataValues.commentNum}}</i></a>
+          <a href="/post/{{dataValues.id}}" class="card-footer-item"><i class="far fa-comment">
+              {{dataValues.commentNum}}</i></a>
 
 
-      
-          <a href="" class="card-footer-item edit-option"><i class="far fa-trash-alt"></i></a>
-          <a href="" class="card-footer-item edit-option"><i class="far fa-edit"></i></a>
-     
+
+          {{!-- <a href="" class="card-footer-item edit-option"><i class="far fa-trash-alt"></i></a>
+          <a href="" class="card-footer-item edit-option"><i class="far fa-edit"></i></a> --}}
+
         </footer>
       </div>
     </div>
