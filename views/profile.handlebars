@@ -61,7 +61,7 @@
             <div class="field">
               <div class="control">
                 {{#if userInfo.dataValues.isProfileOwner}}
-                <input class="input is-small" type="text" placeholder="{{userInfo.dataValues.username}}">
+                <input id='usernameInfo' class="input is-small" type="text" placeholder="{{userInfo.dataValues.username}}">
                 {{else}}
                 <label>{{userInfo.dataValues.username}}</label>
                 {{/if}}
@@ -78,7 +78,7 @@
             <div class="field">
               <div class="control">
                 {{#if userInfo.dataValues.isProfileOwner}}
-                <input class="input is-small" type="text" placeholder="{{userInfo.dataValues.first_name}}">
+                <input id='firstnameInfo' class="input is-small" type="text" placeholder="{{userInfo.dataValues.first_name}}">
                 {{else}}
                 <label>{{userInfo.dataValues.first_name}}</label>
                 {{/if}}
@@ -95,7 +95,7 @@
             <div class="field">
               <div class="control">
                 {{#if userInfo.dataValues.isProfileOwner}}
-                <input class="input is-small" type="text" placeholder="{{userInfo.dataValues.last_name}}">
+                <input id='lastnameInfo' class="input is-small" type="text" placeholder="{{userInfo.dataValues.last_name}}">
                 {{else}}
                 <label>{{userInfo.dataValues.last_name}}</label>
                 {{/if}}
@@ -112,7 +112,7 @@
             <div class="field">
               <div class="control">
                 {{#if userInfo.dataValues.isProfileOwner}}
-                <input class="input is-small" type="text" placeholder="{{userInfo.dataValues.birthdate}}">
+                <input id='birthdateInfo' class="input is-small" type="date" placeholder="{{userInfo.dataValues.birthdate}}">
                 {{else}}
                 <label>{{userInfo.dataValues.birthdate}}</label>
                 {{/if}}
@@ -128,7 +128,7 @@
             <div class="field">
               <div class="control">
                 {{#if userInfo.dataValues.isProfileOwner}}
-                <input class="input is-small" type="text" placeholder="{{userInfo.dataValues.sex}}">
+                <input id='sexInfo' class="input is-small" type="text" placeholder="{{userInfo.dataValues.sex}}">
                 {{else}}
                 <label>{{userInfo.dataValues.sex}}</label>
                 {{/if}}
@@ -144,7 +144,7 @@
             <div class="field">
               <div class="control">
                 {{#if userInfo.dataValues.isProfileOwner}}
-                <input class="input is-small" type="text" placeholder="{{userInfo.dataValues.city}}">
+                <input id='cityInfo' class="input is-small" type="text" placeholder="{{userInfo.dataValues.city}}">
                 {{else}}
                 <label>{{userInfo.dataValues.city}}</label>
                 {{/if}}
@@ -160,7 +160,7 @@
             <div class="field">
               <div class="control">
                 {{#if userInfo.dataValues.isProfileOwner}}
-                <input class="input is-small" type="text" placeholder="{{userInfo.dataValues.province_state}}">
+                <input id='provinceInfo' class="input is-small" type="text" placeholder="{{userInfo.dataValues.province_state}}">
                 {{else}}
                 <label>{{userInfo.dataValues.province_state}}</label>
                 {{/if}}
@@ -176,7 +176,7 @@
             <div class="field">
               <div class="control">
                 {{#if userInfo.dataValues.isProfileOwner}}
-                <input class="input is-small" type="text" placeholder="{{userInfo.dataValues.country}}">
+                <input id='countryInfo' class="input is-small" type="text" placeholder="{{userInfo.dataValues.country}}">
                 {{else}}
                 <label>{{userInfo.dataValues.country}}</label>
                 {{/if}}

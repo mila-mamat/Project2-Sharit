@@ -362,16 +362,24 @@ module.exports = app => {
   });
 
 
-   // Route to edit user info on profile page                  // edit profile except avatar
-  app.patch("/api/users/profile", async (req, res) => {
+   // Route to edit user info on profile page
+  app.post("/api/users/profile", async (req, res) => {
     /* Test */
-    console.log("-------------------------------------")
     let userID = req.user.id
-    console.log(userID)
     try {
       let user = await db.User.findByPk(userID);
       if (!user) return res.status(404).json({ errors: [{ title: 'Not found' }] });
-      user = await db.User.update(req.body);
+
+      user.username = req.body.username
+      // user.first_name = req.body.first_name
+      // user.last_name = req.body.last_name
+      // user.birthdate = req.body.birthdate
+      // user.sex = req.body.sex
+      // user.city = req.body.city
+      // user.province_state = req.body.province_state
+      // user.country = req.body.country
+      user.save();
+      res.status(200).redirect(`/profile/${user.dataValues.username}`);
       
      } catch (err) {
       console.log(`PATCH /api/users/${req.params.userId} failed \n`, err)
