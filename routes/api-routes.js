@@ -253,8 +253,10 @@ module.exports = app => {
   // Route to create comment
   app.post("/api/comments", async (req, res) => {
     try {
-      const comment = await db.Comment.create(req.body);
       req.body.UserId = req.user.id;
+      // Test
+      console.log(req.body);
+      const comment = await db.Comment.create(req.body);
       res.status(200).json({ data: comment });
     } catch (err) {
       console.log(`POST /api/comments failed \n`, err)
