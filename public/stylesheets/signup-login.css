@@ -4,13 +4,6 @@
 
 html { overflow-y: scroll; }
 
-
-
-.is-active {
-  color:#fa7000 !important
-}
-
-
 #bg {
   position:fixed;
   top:0;
@@ -22,9 +15,6 @@ html { overflow-y: scroll; }
   z-index:-1
 }
 
-.a {
-border:red 1px solid;
-}
 
 .m-5em{
     margin: 5em;
@@ -56,3 +46,27 @@ border:red 1px solid;
   }
   
   
+
+  @media screen and (max-width:1023px) {
+.columns {
+  margin:0px;
+  padding: 20px!important;
+}
+
+
+  }
+  @media screen and (max-width:768px) {
+  .column {
+    margin:20px 0px !important;
+    width:100%;
+  }
+  }
+  
+
+  .shadow {
+    border: solid 1px #ccc;
+    -moz-box-shadow: 1px 1px 5px #999;
+    -webkit-box-shadow: 1px 1px 5px #999;
+    box-shadow: 1px 1px 5px #999;
+  }
+ 
