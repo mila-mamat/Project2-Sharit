@@ -68,19 +68,24 @@ module.exports = function (app) {
             model: db.User,
           },
           {
-            model: db.Comment,
-          },
-          {
             model: db.PostLike,
           },
         ],
+      });
+      const comments = await db.Comment.findAll({
+        where: {
+          PostId: req.params.postId
+        },
+        include: [
+          {
+            model: db.User
+          }
+        ],
         order: [["updatedAt", "DESC"]],
       });
-      post.currentUser = req.user.username
-      console.log("post in post page---------------",post)
-
       res.render("post", {
         post: post,
+        comments: comments
       });
     } else res.redirect("/signup-login");
   });
