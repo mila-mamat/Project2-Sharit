@@ -27,6 +27,7 @@ $("#profile_photo").change(function (e) {
 //     alert( "profile update failed" );
 //   })
 
+
 // });
 
 
