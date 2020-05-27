@@ -43,12 +43,12 @@ module.exports = function (app) {
         ],
         order: [["updatedAt", "DESC"]],
       });
-
-      
       posts = posts.map(function (post) {
         post.dataValues.createdAt = moment(post.createdAt).format("lll"); //format time stamp
         post.dataValues.commentNum = post.Comments.length; //count the comments and likes
         post.dataValues.likeNum = post.PostLikes.length;
+        let obj = post.PostLikes.find(o => o.UserId == req.user.id);
+        if(obj) post.dataValues.isLikedBefore = true
         return post;
       });
       posts.currentUser = req.user.username
@@ -125,7 +125,6 @@ module.exports = function (app) {
         return post;
       });
       userInfo.currentUser = req.user.username
-      console.log(userInfo.dataValues.isProfileOwner)
       res.render("profile", {userInfo});
     } else res.redirect("/signup-login");
   });
