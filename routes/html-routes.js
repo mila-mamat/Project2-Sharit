@@ -120,6 +120,7 @@ module.exports = function (app) {
     
       });
          // validate if viewing own profile or others
+      userInfo.dataValues.isProfileOwner = false
       if(userInfo.dataValues.id==req.user.id){
         userInfo.dataValues.isProfileOwner = true;
       }
@@ -130,6 +131,7 @@ module.exports = function (app) {
         return post;
       });
       userInfo.currentUser = req.user.username
+      console.log(userInfo.dataValues.isProfileOwner)
       res.render("profile", {userInfo});
     } else res.redirect("/signup-login");
   });

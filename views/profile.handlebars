@@ -30,9 +30,6 @@
 </nav>
 
 
-
-
-
 <div class="columns mt-3em">
   <div class="column">
     <div class="columns is-mobile ">
@@ -63,7 +60,11 @@
           <div class="field-body">
             <div class="field">
               <div class="control">
+                {{#if userInfo.dataValues.isProfileOwner}}
                 <input class="input is-small" type="text" placeholder="{{userInfo.dataValues.username}}">
+                {{else}}
+                <label>{{userInfo.dataValues.username}}</label>
+                {{/if}}
               </div>
             </div>
           </div>
@@ -76,7 +77,11 @@
           <div class="field-body">
             <div class="field">
               <div class="control">
+                {{#if userInfo.dataValues.isProfileOwner}}
                 <input class="input is-small" type="text" placeholder="{{userInfo.dataValues.first_name}}">
+                {{else}}
+                <label>{{userInfo.dataValues.first_name}}</label>
+                {{/if}}
               </div>
             </div>
           </div>
@@ -89,19 +94,15 @@
           <div class="field-body">
             <div class="field">
               <div class="control">
+                {{#if userInfo.dataValues.isProfileOwner}}
                 <input class="input is-small" type="text" placeholder="{{userInfo.dataValues.last_name}}">
+                {{else}}
+                <label>{{userInfo.dataValues.last_name}}</label>
+                {{/if}}
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="column">
-    <div class="columns is-mobile mt-3em">
-      <div class="column is-two-thirds has-text-left">
-
 
         <div class="field is-horizontal ">
           <div class="field-label is-normal">
@@ -110,7 +111,11 @@
           <div class="field-body">
             <div class="field">
               <div class="control">
+                {{#if userInfo.dataValues.isProfileOwner}}
                 <input class="input is-small" type="text" placeholder="{{userInfo.dataValues.birthdate}}">
+                {{else}}
+                <label>{{userInfo.dataValues.birthdate}}</label>
+                {{/if}}
               </div>
             </div>
           </div>
@@ -122,7 +127,11 @@
           <div class="field-body">
             <div class="field">
               <div class="control">
+                {{#if userInfo.dataValues.isProfileOwner}}
                 <input class="input is-small" type="text" placeholder="{{userInfo.dataValues.sex}}">
+                {{else}}
+                <label>{{userInfo.dataValues.sex}}</label>
+                {{/if}}
               </div>
             </div>
           </div>
@@ -134,7 +143,11 @@
           <div class="field-body">
             <div class="field">
               <div class="control">
+                {{#if userInfo.dataValues.isProfileOwner}}
                 <input class="input is-small" type="text" placeholder="{{userInfo.dataValues.city}}">
+                {{else}}
+                <label>{{userInfo.dataValues.city}}</label>
+                {{/if}}
               </div>
             </div>
           </div>
@@ -146,7 +159,11 @@
           <div class="field-body">
             <div class="field">
               <div class="control">
+                {{#if userInfo.dataValues.isProfileOwner}}
                 <input class="input is-small" type="text" placeholder="{{userInfo.dataValues.province_state}}">
+                {{else}}
+                <label>{{userInfo.dataValues.province_state}}</label>
+                {{/if}}
               </div>
             </div>
           </div>
@@ -158,11 +175,18 @@
           <div class="field-body">
             <div class="field">
               <div class="control">
+                {{#if userInfo.dataValues.isProfileOwner}}
                 <input class="input is-small" type="text" placeholder="{{userInfo.dataValues.country}}">
+                {{else}}
+                <label>{{userInfo.dataValues.country}}</label>
+                {{/if}}
               </div>
             </div>
           </div>
         </div>
+        {{#if userInfo.dataValues.isProfileOwner}}
+          <button id="profileUpdateBtn"class="button is-black">Update</button>
+        {{/if}}
       </div>
     </div>
   </div>
@@ -172,10 +196,6 @@
 
 
 
-<div id="isOwner" class="mt-3em">
-    {{#if userInfo.dataValues.isProfileOwner}}true
-    {{/if}}
-</div>
 
 <hr />
 
@@ -211,7 +231,7 @@
         </div>
         <footer class="card-footer">
           <a href="" class="card-footer-item"><i class="far fa-heart"> {{dataValues.likeNum}}</i></a>
-          <a href="" class="card-footer-item"><i class="far fa-comment"> {{dataValues.commentNum}}</i></a>
+          <a href="post/{{dataValues.id}}" class="card-footer-item"><i class="far fa-comment"> {{dataValues.commentNum}}</i></a>
 
 
       
