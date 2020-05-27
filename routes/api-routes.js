@@ -381,11 +381,6 @@ module.exports = app => {
 
 
 
-
-
-
-
-
   // Route to edit post
   app.patch("/api/posts/:postId", async (req, res) => {
     try {

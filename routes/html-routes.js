@@ -129,6 +129,7 @@ module.exports = function (app) {
         post.dataValues.likeNum = userInfo.dataValues.PostLikes.length;
         return post;
       });
+      userInfo.currentUser = req.user.username
       res.render("profile", {userInfo});
     } else res.redirect("/signup-login");
   });
