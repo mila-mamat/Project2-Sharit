@@ -23,13 +23,25 @@ html { overflow-y: scroll; }
   z-index:-1
 }
 
-.a {
-border:red 1px solid
-}
 
 .mt-3em {
     margin-top: 3em;
 }
+.m-3em {
+    margin: 3em;
+}
+.mx-5em{
+  margin-left: 5em;
+  margin-right:5em;
+}
+
+.ml-5em{
+  margin-left:5em;
+}
+.mr-5em{
+  margin-right:5em;
+}
+
 
 .mt-1em {
     margin-bottom: 1em !important;
@@ -212,11 +224,27 @@ border:red 1px solid
     padding: 2%;
   }
 
-
+/* 
   #isOwner{
    display:none;
   }
 
   .edit-option {
     display:none;
-  }
+  } */
+
+
+
+  #avatar{
+    width: 128px;
+    height: 128px;
+    -webkit-border-radius: 128px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 128px;
+    -moz-background-clip: padding;
+    border-radius: 128px;
+    background-clip: padding-box;
+    float: left;
+    background-size: cover;
+    background-position: center center;
+}

@@ -353,7 +353,7 @@ module.exports = app => {
         // Record the public URL on the User model and store it in the database.
         user.profile_photo = `/avatars/${fileName}`;
         user.save();
-        res.status(200).redirect(`/profile/${user.dataValues.username}`);
+        res.status(200).redirect(`/profile/${req.user.username}`);
         // res.status(200).json(userURL);
         // res.status(200).json({ data: userURL })
       }
@@ -367,24 +367,24 @@ module.exports = app => {
    // Route to edit user info on profile page
   app.post("/api/users/profile", async (req, res) => {
     /* Test */
-    let userID = req.user.id
-    try {
-      let user = await db.User.findByPk(userID);
-      if (!user) return res.status(404).json({ errors: [{ title: 'Not found' }] });
+    // let userID = req.user.id
+    console.log("body",req.body)
 
-      user.username = req.body.username
-      // user.first_name = req.body.first_name
-      // user.last_name = req.body.last_name
-      // user.birthdate = req.body.birthdate
-      // user.sex = req.body.sex
-      // user.city = req.body.city
-      // user.province_state = req.body.province_state
-      // user.country = req.body.country
-      user.save();
-      res.status(200).redirect(`/profile/${user.dataValues.username}`);
+    try {
+
+      const user = await db.User.findByPk(req.user.id)
+      console.log("user----------",user)
+      await user.update(req.body)
+
+      console.log("usr-----",user)
+
+  
+
+      if (!user) return res.status(404).json({ errors: [{ title: 'Not found' }] });
+      res.status(200).redirect(`/profile/${req.user.username}`);
       
      } catch (err) {
-      console.log(`PATCH /api/users/${req.params.userId} failed \n`, err)
+      console.log(`update /api/users/${req.user.id} failed \n`, err)
       res.status(500).json({ errors: [err] }) 
     }
   });

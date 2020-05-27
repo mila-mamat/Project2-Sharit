@@ -162,3 +162,17 @@ width:100px;
 
 
 
+.profile-avatar {
+    width: 32px !important;
+    height: 32px !important;
+    -webkit-border-radius: 32px !important;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius:32px  !important;
+    -moz-background-clip: padding;
+    border-radius: 32px !important;
+    background-clip: padding-box;
+    float: left;
+    background-size: cover;
+    background-position: center center;
+
+}
