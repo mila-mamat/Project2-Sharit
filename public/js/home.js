@@ -1,4 +1,3 @@
-
 var file;
 
 //form adding img
@@ -35,21 +34,44 @@ $grid.imagesLoaded().progress(function () {
   $grid.masonry();
 });
 
+// $(".author-name").on('click', function(event){
+//   let userName = event.target.innerText
+//   if(userName)
+//   {
+//     window.location.replace(`/profile/${userName}`);
+//   }
+// });
 
+$(".like").on("click", function () {
+  const postId = $(this).attr("id");
+  const isLiked = $(this).children("i").hasClass("liked");
+  let numContainer = $(this).children("span");
+  let likeNum = parseInt(numContainer.text());
 
-$(".author-name").on('click', function(event){
-  let userName = event.target.innerText
-  if(userName)
-  {
-    window.location.replace(`/profile/${userName}`);
+  //check if user marked "like" on this post before
+  if (isLiked) {
+    //if it was liked, delete the like
+    try {
+      $.ajax({
+        method: "DELETE",
+        url: "/api/post-likes",
+        data: { PostId: postId },
+      });
+      // decrease the like numbers and change the color back to black
+      $(this).children("i").removeClass("liked");
+      numContainer.text(likeNum - 1);
+    } catch (err) {
+      console.log(err);
+    }
+  } else {
+    try {
+      //if haven't, mark like on the post
+      $.post("/api/post-likes", { PostId: postId });
+      //increase the number of likes and change the color to red
+      $(this).children("i").addClass("liked");
+      numContainer.text(likeNum + 1);
+    } catch (err) {
+      console.log(err);
+    }
   }
-  // $.post("/api/users", userDataObj)
-  // .done(function() {
-  //   window.alert('Signup succeeded, ready to login!')
-  // })
-  // .fail(function() {
-  //   alert( "Fail to create a new user" );
-  // })
-
 });
-

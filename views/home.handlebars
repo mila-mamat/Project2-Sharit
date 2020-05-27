@@ -78,7 +78,7 @@
             <a class="card-header-title author is-flex" href="/profile/{{User.dataValues.username}}" id="user-ID">
               {{!--HERE: add link to the authors avatar in the href--}}
               <figure class="avatar image is-32x32">
-                <img class="is-rounded" src="{{User.dataValues.profile_photo}}" alt="profile photo">
+                <img class="is-rounded profile-avatar" src="{{User.dataValues.profile_photo}}" alt="profile photo">
               </figure>
               <div class="author-name">
                 {{User.dataValues.username}}
@@ -99,10 +99,14 @@
             </div>
           </div>
           <footer class="card-footer">
-            <a href="" class="card-footer-item"><i class="far fa-heart">   {{dataValues.likeNum}}</i></a>
-            <a href="/post/{{dataValues.id}}" class="card-footer-item"><i class="far fa-comment">   {{dataValues.commentNum}}</i></a>
+            <a class="card-footer-item like" id={{dataValues.id}}><i class="far fa-heart 
+            {{#if dataValues.isLikedBefore}}
+            liked
+            {{/if}}
+            "> </i>&nbsp; &nbsp;<span>{{dataValues.likeNum}}</span></a>
+            <a href="/post/{{dataValues.id}}" class="card-footer-item"><i class="far fa-comment"></i>&nbsp;&nbsp;{{dataValues.commentNum}}</a>
             {{!-- leads to user profile page  --}}
-            <a href="/profile/{{User.dataValues.username}}" target="_blank" class="card-footer-item"><i
+            <a href="/profile/{{User.dataValues.username}}" class="card-footer-item"><i
                 class="far fa-user-circle"></i></a>
           </footer>
         </div>
