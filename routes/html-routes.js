@@ -83,6 +83,8 @@ module.exports = function (app) {
         ],
         order: [["updatedAt", "DESC"]],
       });
+      // attach current user to the post object
+      post.currentUser = req.user.username
       res.render("post", {
         post: post,
         comments: comments
@@ -124,6 +126,7 @@ module.exports = function (app) {
         post.dataValues.likeNum = userInfo.dataValues.PostLikes.length;
         return post;
       });
+      // attach current user to the userinfo object
       userInfo.currentUser = req.user.username
       res.render("profile", {userInfo});
     } else res.redirect("/signup-login");
