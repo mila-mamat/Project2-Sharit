@@ -115,10 +115,10 @@ module.exports = function (app) {
         order: [["updatedAt", "DESC"]],
     
       });
-
+      
       let posts = await db.Post.findAll({
         where: {
-          Userid: req.user.id,
+          Userid: userInfo.id,
         },
         include: [
           {
@@ -147,7 +147,7 @@ module.exports = function (app) {
       if(userInfo.dataValues.id==req.user.id){
         userInfo.dataValues.isProfileOwner = true;
       }
-      console.log(userInfo.dataValues.Posts)
+
       userInfo.Posts = userInfo.Posts.map(function (post) {
         post.dataValues.createdAt = moment(post.createdAt).format("lll"); //format time stamp
         return post;
