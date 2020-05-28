@@ -1,5 +1,5 @@
 # SharIt!
-## Life is beautiful - share it!
+Life is beautiful - share it!
 
 ![GitHub followers](https://img.shields.io/github/followers/mjsouthcott?label=Follow&style=social)
 ![GitHub repo size](https://img.shields.io/github/repo-size/mjsouthcott/13-node-express-handlebars)
@@ -18,7 +18,7 @@
 
 ## Description
 
-This is a mobile-first web application that allows users to create and edit a profile, create posts with text and an optional photo, like and add comments to posts, and view other users' profiles and posts. User data is stored securely in a MySql database and rendered to the browser window using Handlebars views. Request and response routing is handled using HTTP.
+This is a mobile-first web application that allows users to create and edit a profile, create posts with photos (optional), like and add comments to posts, and view other users' profiles and posts. User data is stored securely in a MySql database and rendered to the browser window using Handlebars views. Request and response routing is handled using HTTP.
 
 ## Technologies Used
 
@@ -30,15 +30,15 @@ This is a mobile-first web application that allows users to create and edit a pr
 * `Node.js`
 * `SQL`
 * Various `npm` Packages
-** `bcryptjs`
-** `to-case`
-** `express`
-** `express-fileupload`
-** `express-session`
-** `moment`
-** `mysql2`
-** `passport-local`
-** `sequelize`
+  * `bcryptjs`
+  * `to-case`
+  * `express`
+  * `express-fileupload`
+  * `express-session`
+  * `moment`
+  * `mysql2`
+  * `passport-local`
+  * `sequelize`
 
 ## User Story
 
