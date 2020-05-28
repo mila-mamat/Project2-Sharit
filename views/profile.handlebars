@@ -233,9 +233,6 @@
 
 </div>
 
-
-
-
 <hr />
 
 <main id="main-content">
@@ -244,7 +241,7 @@
     {{!-- grid-sizer required for the masonry working --}}
     <div class="grid-sizer"></div>
 
-    {{#each userInfo.Posts}}
+    {{#each posts}}
 
     <div class="grid-item">
       <div class="card">
@@ -269,9 +266,9 @@
           </div>
         </div>
         <footer class="card-footer">
-          <a href="" class="card-footer-item"><i class="far fa-heart"> {{dataValues.likeNum}}</i></a>
+          <a href="" class="card-footer-item"><i class="far fa-heart"> {{dataValues.PostLikes.length}}</i></a>
           <a href="/post/{{dataValues.id}}" class="card-footer-item"><i class="far fa-comment">
-              {{dataValues.commentNum}}</i></a>
+              {{dataValues.Comments.length}}</i></a>
 
 
 
