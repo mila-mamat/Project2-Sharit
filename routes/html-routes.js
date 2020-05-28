@@ -81,7 +81,7 @@ module.exports = function (app) {
             model: db.User
           }
         ],
-        order: [["updatedAt", "DESC"]],
+        order: [["updatedAt", "ASC"]],
       });
       // attach current user to the post object
       post.currentUser = req.user.username
