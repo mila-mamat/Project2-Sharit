@@ -115,20 +115,46 @@ module.exports = function (app) {
         order: [["updatedAt", "DESC"]],
     
       });
+
+      let posts = await db.Post.findAll({
+        where: {
+          Userid: req.user.id,
+        },
+        include: [
+          {
+            model: db.User,
+          },
+          {
+            model: db.Comment,
+          },
+          {
+            model: db.PostLike,
+          },
+        ],
+        order: [["updatedAt", "DESC"]],
+      });
+
+      posts = posts.map(function (post) {
+        post.dataValues.createdAt = moment(post.createdAt).format("lll"); //format time stamp
+        post.dataValues.commentNum = post.Comments.length; //count the comments and likes
+        post.dataValues.likeNum = post.PostLikes.length;
+        let obj = post.PostLikes.find(o => o.UserId == req.user.id);
+        if(obj) post.dataValues.isLikedBefore = true
+        return post;
+      });
          // validate if viewing own profile or others
       userInfo.dataValues.isProfileOwner = false
       if(userInfo.dataValues.id==req.user.id){
         userInfo.dataValues.isProfileOwner = true;
       }
+      console.log(userInfo.dataValues.Posts)
       userInfo.Posts = userInfo.Posts.map(function (post) {
         post.dataValues.createdAt = moment(post.createdAt).format("lll"); //format time stamp
-        post.dataValues.commentNum = userInfo.dataValues.Comments.length; //count the comments and likes
-        post.dataValues.likeNum = userInfo.dataValues.PostLikes.length;
         return post;
       });
       // attach current user to the userinfo object
       userInfo.currentUser = req.user.username
-      res.render("profile", {userInfo});
+      res.render("profile", {userInfo, posts});
     } else res.redirect("/signup-login");
   });
 
