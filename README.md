@@ -6,6 +6,14 @@ Life is beautiful - share it!
 ![GitHub top language](https://img.shields.io/github/languages/top/mjsouthcott/13-node-express-handlebars)
 ![GitHub last commit](https://img.shields.io/github/last-commit/mjsouthcott/13-node-express-handlebars)
 
+## Team members
+Mila Mamat: https://github.com/mila-mamat
+
+Matthew Southcott: https://github.com/mjsouthcott
+
+MaxGuo: https://github.com/Maxguojiaqi
+
+
 ## Table of Contents
 
 * [Description](#description)
@@ -52,15 +60,15 @@ SO THAT I can keep in touch with the people that I care about
 ### Usage
 
 1. sign-up and login
-<img src="https://github.com/mila-mamat/project2-sharit/demo/signup.gif" alt="Sample result" width="800" height="400">
+<img src="https://github.com/mila-mamat/Project2-Sharit/blob/master/demo/signup.gif"  width="800" height="400">
 
 
 2. create new post, like and comment others post
-<img src="https://github.com/mila-mamat/project2-sharit/demo/post.gif" alt="Sample result" width="800" height="400">
+<img src="https://github.com/mila-mamat/Project2-Sharit/blob/master/demo/post.gif"  width="800" height="400">
 
 
 3. update own profile, view others profile
-<img src="https://github.com/mila-mamat/project2-sharit/demo/profile.gif" alt="Sample result" width="800" height="400">
+<img src="https://github.com/mila-mamat/Project2-Sharit/blob/master/demo/profile.gif"  width="800" height="400">
 
 ## Installation
 
