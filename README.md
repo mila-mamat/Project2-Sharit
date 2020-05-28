@@ -48,6 +48,20 @@ I WANT to share photos and posts
 SO THAT I can keep in touch with the people that I care about
 ```
 
+
+### Usage
+
+1. sign-up and login
+<img src="https://github.com/mila-mamat/project2-sharit/demo/signup.gif" alt="Sample result" width="800" height="400">
+
+
+2. create new post, like and comment others post
+<img src="https://github.com/mila-mamat/project2-sharit/demo/post.gif" alt="Sample result" width="800" height="400">
+
+
+3. update own profile, view others profile
+<img src="https://github.com/mila-mamat/project2-sharit/demo/profile.gif" alt="Sample result" width="800" height="400">
+
 ## Installation
 
 To install the application, click "Clone or download", copy the URL, launch Git Bash, navigate to your desired directory and use
