@@ -1,10 +1,9 @@
 # SharIt!
 Life is beautiful - share it!
 
-![GitHub followers](https://img.shields.io/github/followers/mjsouthcott?label=Follow&style=social)
-![GitHub repo size](https://img.shields.io/github/repo-size/mjsouthcott/13-node-express-handlebars)
-![GitHub top language](https://img.shields.io/github/languages/top/mjsouthcott/13-node-express-handlebars)
-![GitHub last commit](https://img.shields.io/github/last-commit/mjsouthcott/13-node-express-handlebars)
+![GitHub repo size](https://img.shields.io/github/repo-size/mila-mamat/Project2-Sharit)
+![GitHub top language](https://img.shields.io/github/languages/top/mila-mamat/Project2-Sharit)
+![GitHub last commit](https://img.shields.io/github/last-commit/mila-mamat/Project2-Sharit)
 
 ## Team members
 Mila Mamat: https://github.com/mila-mamat
