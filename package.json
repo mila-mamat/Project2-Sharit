@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "2.4.3",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-fileupload": "^1.1.7-alpha.3",
     "express-handlebars": "^4.0.4",
     "express-session": "^1.17.1",
